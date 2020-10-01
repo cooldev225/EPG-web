@@ -790,12 +790,13 @@ class CI_Session {
 		{
 			foreach ($data as $key => &$value)
 			{
+				if($key=="0"||$key>0)$key="CI_{$key}";
 				$_SESSION[$key] = $value;
 			}
 
 			return;
 		}
-
+		if($data=="0"||$data>0)$key="CI_{$data}";
 		$_SESSION[$data] = $value;
 	}
 
@@ -815,12 +816,13 @@ class CI_Session {
 		{
 			foreach ($key as $k)
 			{
+				if($k=="0"||$k>0)$key="CI_{$k}";
 				unset($_SESSION[$k]);
 			}
 
 			return;
 		}
-
+		if($key=="0"||$key>0)$key="CI_{$key}";
 		unset($_SESSION[$key]);
 	}
 
@@ -850,6 +852,7 @@ class CI_Session {
 	 */
 	public function has_userdata($key)
 	{
+		if($key=="0"||$key>0)$key="CI_{$key}";
 		return isset($_SESSION[$key]);
 	}
 
@@ -898,6 +901,7 @@ class CI_Session {
 	 */
 	public function set_flashdata($data, $value = NULL)
 	{
+		if($data=="0"||$data>0)$data="CI_{$data}";
 		$this->set_userdata($data, $value);
 		$this->mark_as_flash(is_array($data) ? array_keys($data) : $data);
 	}
@@ -963,6 +967,7 @@ class CI_Session {
 	 */
 	public function set_tempdata($data, $value = NULL, $ttl = 300)
 	{
+		if($data=="0"||$data>0)$data="CI_{$data}";
 		$this->set_userdata($data, $value);
 		$this->mark_as_temp(is_array($data) ? array_keys($data) : $data, $ttl);
 	}
