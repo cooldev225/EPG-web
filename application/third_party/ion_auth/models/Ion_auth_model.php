@@ -1006,8 +1006,8 @@ class Ion_auth_model extends CI_Model
 					return FALSE;
 				}
 
-				$this->set_session($user);
-				$this->session->set_userdata('ion_auth',array('who'=>array('p'=>$pp)));
+				//$this->set_session($user);
+				//$this->session->set_userdata('ion_auth',array('who'=>array('p'=>$pp)));
 				$this->update_last_login($user->id);
 				$this->clear_login_attempts($identity);
 				if ($remember && $this->config->item('remember_users', 'ion_auth'))
