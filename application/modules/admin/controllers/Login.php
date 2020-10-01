@@ -36,6 +36,7 @@ class Login extends MY_Controller {
 				refresh();
 			}
 		}
+		exit("<script>alert('>>>".$_SERVER['REQUEST_METHOD']."');</script>");
 		if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 			exit("<script>alert('>>>".$form->validate()."');</script>");
 		}
