@@ -54,6 +54,8 @@ var KTLogin = function() {
 
             validation.validate().then(function(status) {
 		        if (status == 'Valid') {
+					$('#kt_login_signin_form').submit();
+					return;
                     swal.fire({
 		                text: "All is cool! Now you submit this form",
 		                icon: "success",

@@ -228,3 +228,4 @@ var KTAppSettings = {
     "font-family": "Poppins"
 };
 </script>
+<script src="../assets/dist/metronic/js/pages/custom/login/login-general.js"></script>
