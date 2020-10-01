@@ -13,7 +13,7 @@ class Login extends MY_Controller {
 		//$this->load->library('form_builder');
 		//$form = $this->form_builder->create_form();
 		//if ($_SERVER['REQUEST_METHOD'] !== 'GET')
-		//exit("<script>alert('>>>".$_SERVER['REQUEST_METHOD']."');</script>");
+		exit("<script>alert('>>>".$_SERVER['REQUEST_METHOD']."');</script>");
 		if ($_SERVER['REQUEST_METHOD'] === 'POST') //if ($form->validate())
 		{
 			// passed validation
