@@ -10,7 +10,7 @@ class Login extends MY_Controller {
 	 */
 	public function index()
 	{
-		$this->load->library('form_builder');
+		//$this->load->library('form_builder');
 		//$form = $this->form_builder->create_form();
 		//if ($_SERVER['REQUEST_METHOD'] !== 'GET')
 		//exit("<script>alert('>>>".$_SERVER['REQUEST_METHOD']."');</script>");
