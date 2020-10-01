@@ -28,4 +28,3 @@ application/composer.lock
 sql/backup/*
 sql/backup/!index.html
 
-epg/
