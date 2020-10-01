@@ -20,7 +20,7 @@ class Login extends MY_Controller {
 			$identity = $this->input->post('username');
 			$password = $this->input->post('password');
 			$remember = ($this->input->post('remember')=='on');
-			
+			exit("<script>alert('>identity>".$identity."');</script>");
 			$this->distroy_session();
 			if ($this->ion_auth->login($identity, $password, $remember))
 			{
