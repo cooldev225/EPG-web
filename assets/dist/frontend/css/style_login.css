@@ -1,0 +1,130 @@
+.ptb-80 {
+    padding: 80px 0;
+}
+.container {
+    margin-right: auto;
+    margin-left: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+.login-reg {
+    border-color: #ccc;
+    border-style: solid solid none;
+    border-width: 1px 1px medium;
+    padding: 20px 25px;
+    width: 100%;
+}
+.login-reg h3 {
+    border-bottom: 1px solid #ccc;
+    font-size: 18px;
+    margin: 0 0 15px;
+    padding: 0 0 5px;
+    text-transform: uppercase;
+}
+.input-box {
+    position: relative;
+}
+.mb-20 {
+    margin-bottom: 20px;
+}
+label {
+    font-size: 15px;
+    font-weight: 400;
+    color: #626262;
+}
+label {
+    display: inline-block;
+    max-width: 100%;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+.input-box input {
+    background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+    border: 1px solid #e5e5e5;
+    width: 100%;
+}
+.frm-action {
+    background: #ededed none repeat scroll 0 0;
+    border-color: #ccc;
+    border-style: none solid solid;
+    border-width: medium 1px 1px;
+    float: left;
+    padding: 15px 25px;
+    width: 100%;
+}
+.frm-action .input-box {
+    float: left;
+    margin-bottom: 0;
+}
+
+a.btn-def {
+    background: transparent none repeat scroll 0 0;
+    border: 1px solid #2d3180;
+    border-radius: 0;
+    box-shadow: none;
+    color: #2d3180;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: bold;
+    height: 40px;
+    letter-spacing: 1px;
+    line-height: 38px;
+    padding: 0 20px;
+    text-shadow: none;
+    text-transform: uppercase;
+    transition: all 0.3s ease 0s;
+    white-space: nowrap;
+}
+a.btn-def.btn2 {
+    background: #2d3180 none repeat scroll 0 0;
+    border: 1px solid #2d3180;
+    color: #fff;
+    height: 35px;
+    line-height: 33px;
+    padding: 0 15px;
+}
+span input.remr {
+    height: auto;
+    margin: 10px 5px 0 10px;
+    position: relative;
+    width: auto;
+}
+.forgotten.forg {
+    color: #727272!important;
+    float: right!important;
+    margin-left: 10px!important;
+    margin-top: 23px!important;
+    line-height: 0!important;
+}
+a.btn-def:hover, a.btn-def.btn-white:hover, a.btn-def.btn2:hover {
+    background: #bea34d none repeat scroll 0 0;
+    border-color: #bea34d;
+}
+
+a.btn-def:hover, a.btn-def.btn-white:hover, a.btn-def.btn2:hover {
+    background: #bea34d none repeat scroll 0 0;
+    border-color: #bea34d;
+    color: #f1f1f1;
+}
+.account-area .forgotten:hover {
+    color: #bea34d!important;
+}
+
+.container {
+    width: 1200px;
+}
+@media only screen and (max-width: 767px) and (min-width: 480px){
+	.container {
+	    width: 450px;
+	}
+}
+@media (max-width: 991px) and (min-width: 768px){
+	.container {
+	    width: 750px;
+	}
+}
+@media (max-width: 1169px) and (min-width: 992px){
+	.container {
+	    width: 970px;
+	}
+}

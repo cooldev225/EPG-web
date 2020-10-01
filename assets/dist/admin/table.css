@@ -1,0 +1,51 @@
+table{
+	width: 100%;
+}
+.edit-icon-custom{
+    background: url(../../grocery_crud/themes/flexigrid/css/images/edit.png) no-repeat;
+    cursor: pointer;
+    width: 16px;
+    height: 16px;
+    float: right;
+    border: none !important;
+    padding: 0px !important;
+    padding-bottom: 0px !important;
+    margin-left: 5px;
+    display: block;
+}
+.delete-icon-custom {
+    background: url(../../grocery_crud/themes/flexigrid/css/images/close.png) no-repeat;
+    cursor: pointer;
+    width: 16px;
+    height: 16px;
+    float: right;
+    border: none !important;
+    padding: 0px !important;
+    padding-bottom: 0px !important;
+    margin-left: 5px;
+    display: block;
+}
+.add-icon-custom {
+    background: url(../../grocery_crud/themes/flexigrid/css/images/add.png) no-repeat;
+    cursor: pointer;
+    width: 16px;
+    height: 16px;
+    float: right;
+    border: none !important;
+    padding: 0px !important;
+    padding-bottom: 0px !important;
+    margin-left: 5px;
+    display: block;
+}
+.download-icon-custom{
+    background: url(../../grocery_crud/themes/flexigrid/css/images/Download-icon.png) no-repeat;
+    cursor: pointer;
+    width: 16px;
+    height: 16px;
+    float: right;
+    border: none !important;
+    padding: 0px !important;
+    padding-bottom: 0px !important;
+    margin-left: 5px;
+    display: block;
+}
