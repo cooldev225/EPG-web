@@ -13,7 +13,7 @@ class Login extends MY_Controller {
 		$this->load->library('form_builder');
 		$form = $this->form_builder->create_form();
 
-		if ($form->validate())
+		if (!empty($this->input->post('username')))//$form->validate())
 		{
 			// passed validation
 			$identity = $this->input->post('username');

@@ -247,6 +247,7 @@ class Form {
 	{
 		// only run validation upon form submission
 		$post_data = $this->CI->input->post();
+		
 		if ( !empty($post_data) )
 		{
 			// Step 1. reCAPTCHA verification (skipped in development mode)
