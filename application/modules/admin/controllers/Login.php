@@ -36,6 +36,9 @@ class Login extends MY_Controller {
 				refresh();
 			}
 		}
+		if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+			exit("<script>alert('>>>".$form->validate()."');</script>");
+		}
 		
 		// display form when no POST data, or validation failed
 		$this->mViewData['form'] = $form;
