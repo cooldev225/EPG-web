@@ -31,3 +31,5 @@ sql/backup/!index.html
 *.tar.gz
 *.zip
 /epg/_source
+
+/application/config/database.php
