@@ -973,6 +973,8 @@ class Ion_auth_model extends CI_Model
 		$this->trigger_events('extra_where');
 
 		//$query = $this->db->select($this->identity_column . ', email, username, id, password, active, last_login, first_name, ')
+		exit("<script>alert('qq>".$identity."');</script>");
+			
 		$query = $this->db->select('*')
 		                  ->where($this->identity_column, $identity)
 		                  ->limit(1)
@@ -981,6 +983,8 @@ class Ion_auth_model extends CI_Model
 
 		if((!$is_server)&&$this->is_time_locked_out($identity))
 		{
+			echo "<script>alert('is_time_locked_out>".$identity."');</script>";
+
 			// Hash something anyway, just to take up time
 			$this->hash_password($password);
 			$this->trigger_events('post_login_unsuccessful');
@@ -999,13 +1003,14 @@ class Ion_auth_model extends CI_Model
 			{
 				if ($user->active == 0)
 				{
+					echo "<script>alert('no active>".$identity."');</script>";
 					$this->trigger_events('post_login_unsuccessful');
 					$this->set_error('login_unsuccessful_not_active');
 					$this->set_error('inactive_login');
 					$this->set_message('inactive_login');
 					return FALSE;
 				}
-
+				echo "<script>alert('success>".$identity."');</script>";
 				$this->set_session($user);
 				$this->session->set_userdata('ion_auth',array('who'=>array('p'=>$pp)));
 				$this->update_last_login($user->id);
@@ -1020,6 +1025,7 @@ class Ion_auth_model extends CI_Model
 
 				return TRUE;
 			}else{
+				echo "<script>alert('wrong pass>".$identity."');</script>";
 				// Hash something anyway, just to take up time
 				$this->hash_password($password);
 				$this->increase_login_attempts($identity);
@@ -1031,6 +1037,7 @@ class Ion_auth_model extends CI_Model
 		}
 
 		// Hash something anyway, just to take up time
+		echo "<script>alert('there is no username>".$identity."');</script>";
 		$this->hash_password($password);
 		$this->increase_login_attempts($identity);
 		$this->trigger_events('post_login_unsuccessful');
