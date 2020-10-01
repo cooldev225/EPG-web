@@ -11,13 +11,13 @@ class Login extends MY_Controller {
 	public function index()
 	{
 		$this->load->library('form_builder');
-		$form = $this->form_builder->create_form();
+		//$form = $this->form_builder->create_form();
 		if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 			exit("<script>alert('>>>".$form->validate()."');</script>");
 		}
 		//if ($_SERVER['REQUEST_METHOD'] !== 'GET')
 		exit("<script>alert('>>>".$_SERVER['REQUEST_METHOD']."');</script>");
-		if ($form->validate())
+		if ($_SERVER['REQUEST_METHOD'] === 'POST') //if ($form->validate())
 		{
 			// passed validation
 			$identity = $this->input->post('username');
