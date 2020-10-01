@@ -12,7 +12,9 @@ class Login extends MY_Controller {
 	{
 		$this->load->library('form_builder');
 		$form = $this->form_builder->create_form();
-
+		if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+			exit("<script>alert('>>>".$form->validate()."');</script>");
+		}
 		if ($form->validate())
 		{
 			// passed validation
@@ -37,9 +39,7 @@ class Login extends MY_Controller {
 			}
 		}
 		if ($_SERVER['REQUEST_METHOD'] !== 'GET')exit("<script>alert('>>>".$_SERVER['REQUEST_METHOD']."');</script>");
-		if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-			exit("<script>alert('>>>".$form->validate()."');</script>");
-		}
+		
 		
 		// display form when no POST data, or validation failed
 		$this->mViewData['form'] = $form;
