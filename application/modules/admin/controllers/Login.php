@@ -13,7 +13,7 @@ class Login extends MY_Controller {
 		$this->load->library('form_builder');
 		$form = $this->form_builder->create_form();
 
-		if (!empty($this->input->post('username')))//$form->validate())
+		if ($form->validate())
 		{
 			// passed validation
 			$identity = $this->input->post('username');
@@ -21,7 +21,6 @@ class Login extends MY_Controller {
 			$remember = ($this->input->post('remember')=='on');
 			
 			$this->distroy_session();
-			exit("<script>alert('".$password."');</script>");
 			if ($this->ion_auth->login($identity, $password, $remember))
 			{
 				// login succeed
