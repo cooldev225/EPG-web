@@ -44,6 +44,33 @@ class Login extends MY_Controller {
 		$this->mBodyClass = 'login-page';
 		$this->render('login', 'empty');
 	}
+	public function loginpost(){
+		$this->load->library('form_builder');
+		$form = $this->form_builder->create_form();
+		//if ($_SERVER['REQUEST_METHOD'] === 'POST') //if ($form->validate())
+		{
+			// passed validation
+			$identity = $this->input->post('username');
+			$password = $this->input->post('password');
+			$remember = ($this->input->post('remember')=='on');
+			$this->distroy_session();
+			if ($this->ion_auth->login($identity, $password, $remember))
+			{
+				// login succeed
+				$messages = $this->ion_auth->messages();
+				$this->system_message->set_success($messages);
+				redirect($this->mModule);
+			}
+			else
+			{
+				// login failed
+				$errors = $this->ion_auth->errors();
+				$this->system_message->set_error($errors);
+				refresh();
+			}
+		}
+		exit('>>>'.$identity);
+	}
 	public function distroy_session(){
 		// Destroy the session
 		$this->session->sess_destroy();
