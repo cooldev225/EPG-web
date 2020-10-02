@@ -45,10 +45,12 @@ class Login extends MY_Controller {
 		$this->render('login', 'empty');
 	}
 	public function loginpost(){
-		if(isset($_POST['username']))$sss=$_POST['username'].'>>POST';
-		else if(isset($_GET['username'])) $sss=$_GET['username'].'>>GET';
+		print_r($this->input->post());
+		return $this->input->server('REQUEST_METHOD');
+		// if(isset($_POST['username']))$sss=$_POST['username'].'>>POST';
+		// else if(isset($_GET['username'])) $sss=$_GET['username'].'>>GET';
 		
-		exit('>>>'.$sss);
+		// exit('>>>'.$sss);
 	}
 	public function distroy_session(){
 		// Destroy the session
