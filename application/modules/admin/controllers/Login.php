@@ -10,10 +10,10 @@ class Login extends MY_Controller {
 	 */
 	public function index()
 	{
-		//$this->load->library('form_builder');
-		//$form = $this->form_builder->create_form();
+		$this->load->library('form_builder');
+		$form = $this->form_builder->create_form();
 		//if ($_SERVER['REQUEST_METHOD'] !== 'GET')
-		echo("<script>alert('>>>".$_SERVER['REQUEST_METHOD']."');</script>");
+		//echo("<script>alert('>>>".$_SERVER['REQUEST_METHOD']."');</script>");
 		if ($_SERVER['REQUEST_METHOD'] === 'POST') //if ($form->validate())
 		{
 			// passed validation
