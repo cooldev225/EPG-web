@@ -13,14 +13,13 @@ class Login extends MY_Controller {
 		//$this->load->library('form_builder');
 		//$form = $this->form_builder->create_form();
 		//if ($_SERVER['REQUEST_METHOD'] !== 'GET')
-		exit("<script>alert('>>>".$_SERVER['REQUEST_METHOD']."');</script>");
+		echo("<script>alert('>>>".$_SERVER['REQUEST_METHOD']."');</script>");
 		if ($_SERVER['REQUEST_METHOD'] === 'POST') //if ($form->validate())
 		{
 			// passed validation
 			$identity = $this->input->post('username');
 			$password = $this->input->post('password');
 			$remember = ($this->input->post('remember')=='on');
-			exit("<script>alert('>identity>".$identity."');</script>");
 			$this->distroy_session();
 			if ($this->ion_auth->login($identity, $password, $remember))
 			{
