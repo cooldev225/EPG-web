@@ -46,7 +46,7 @@ class Login extends MY_Controller {
 	}
 	public function loginpost(){
 		
-		exit('>>>'.$identity);
+		exit('>>>'.$this->input->post('username'));
 	}
 	public function distroy_session(){
 		// Destroy the session
