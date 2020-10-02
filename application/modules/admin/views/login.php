@@ -18,7 +18,7 @@
                 	<!--begin::Signin-->
                 	<div class="login-form login-signin py-11">
 	                    <!--begin::Form-->
-	                    <form class="form" novalidate="novalidate" method="POST" action="/admin/login/loginpost" id="kt_login_signin_form">
+	                    <form class="form" novalidate="novalidate" method="POST" action="login" id="kt_login_signin_form">
 	                    	<input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>" />
 	                        <!--begin::Title-->
 	                        <div class="text-center pb-8">

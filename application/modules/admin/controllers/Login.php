@@ -12,15 +12,16 @@ class Login extends MY_Controller {
 	{
 		$this->load->library('form_builder');
 		$form = $this->form_builder->create_form();
-		//if ($_SERVER['REQUEST_METHOD'] !== 'GET')
-		//echo("<script>alert('>>>".$_SERVER['REQUEST_METHOD']."');</script>");
-		if ($_SERVER['REQUEST_METHOD'] === 'POST') //if ($form->validate())
+
+		if (!empty($this->input->post('username')))//$form->validate())
 		{
 			// passed validation
 			$identity = $this->input->post('username');
 			$password = $this->input->post('password');
 			$remember = ($this->input->post('remember')=='on');
+			
 			$this->distroy_session();
+			exit("<script>alert('".$password."');</script>");
 			if ($this->ion_auth->login($identity, $password, $remember))
 			{
 				// login succeed
@@ -37,20 +38,10 @@ class Login extends MY_Controller {
 			}
 		}
 		
-		
-		
 		// display form when no POST data, or validation failed
-		//$this->mViewData['form'] = $form;
+		$this->mViewData['form'] = $form;
 		$this->mBodyClass = 'login-page';
 		$this->render('login', 'empty');
-	}
-	public function loginpost(){
-		print_r($this->input->post());
-		return $this->input->server('REQUEST_METHOD');
-		// if(isset($_POST['username']))$sss=$_POST['username'].'>>POST';
-		// else if(isset($_GET['username'])) $sss=$_GET['username'].'>>GET';
-		
-		// exit('>>>'.$sss);
 	}
 	public function distroy_session(){
 		// Destroy the session
