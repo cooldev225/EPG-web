@@ -471,6 +471,8 @@ class Epg extends MY_Controller {
 				$prog.='
 <programme start="'.$programme['start'].' '.$programme['zone'].'" stop="'.$programme['stop'].' '.$programme['zone'].'" channel="'.$programme['channel_id'].'">';
 				*/
+				$programme['start']=str_replace('-','',str_replace(' ','',str_replace(':','',$programme['start'])));
+				$programme['stop']=str_replace('-','',str_replace(' ','',str_replace(':','',$programme['stop'])));
 				$prog.='
 <programme start="'.$programme['start'].' '.$zonecode.'" stop="'.$programme['stop'].' '.$zonecode.'" channel="'.$programme['channel_id'].'">';
   				if($programme['title']!='')$prog.='
