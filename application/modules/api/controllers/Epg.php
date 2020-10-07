@@ -59,6 +59,34 @@ class Epg extends MY_Controller {
 		exit(json_encode($res));
 	}
 
+	public function getSitesList(){
+		header('Content-Type: application/json');
+		$res=$this->users->execute_query('select id,name from epg_site where country_id='.$_POST['id']);
+		exit(json_encode($res));
+	}
+	public function getChannelsList(){
+		header('Content-Type: application/json');
+		$res=$this->users->execute_query('select id,name from epg_channel where epg_site_id='.$_POST['id']);
+		exit(json_encode($res));
+	}
+	public function setZoneOffset(){
+		header('Content-Type: application/json');
+		if($_POST['channel_id']==0){
+			if($_POST['site_id']==0){
+				if($_POST['country_id']==0){
+					$sql="update epg_channel set zone={$_POST['zone']}";
+				}else{
+					foreach($this->users->execute_query("select * from epg_site where country_id={$_POST['country_id']}") as $site){
+						$sql="update epg_channel set zone={$_POST['zone']} where epg_site_id={$site['id']}";
+					}
+				}
+			}else $sql="update epg_channel set zone={$_POST['zone']} where epg_site_id={$_POST['site_id']}";
+		}
+		else $sql="update epg_channel set zone={$_POST['zone']} where id IN ({$_POST['channel_id']})";
+		$this->users->execute_query_no_result($sql);
+		exit(json_encode(array('msg'=>'ok')));
+	}
+
 	public function getCustomersDataTable(){
 		header('Content-Type: application/json');	
 		$sql="SELECT a.* FROM `users` a WHERE a.id>0 ";
@@ -430,15 +458,21 @@ class Epg extends MY_Controller {
     <icon src="'.$row['icon'].'" />
     <url>'.$row['url'].'</url>
   </channel>';
+			
+			$zonecode=($row['zone']<0?'-':'+').(abs($row['zone'])<10?'0'.abs($row['zone']):$row['zone']).('00');
+			
   			$programmes=$this->users->execute_query("select *,CONVERT_TZ(`start`, @@session.time_zone, CONCAT(SUBSTRING(`zone`,1,3),':',SUBSTRING(`zone`,4,2)) ) as fstart,CONVERT_TZ(`stop`, @@session.time_zone, CONCAT(SUBSTRING(`zone`,1,3),':',SUBSTRING(`zone`,4,2)) ) as fstop from epg_programme where channel_id='{$row['xmltv_id']}' and start>='{$date}' order by start");
   			foreach($programmes as $programme){
   				/*
   				$prog.='
 <programme start="'.$programme['fstart'].' '.$current_location_zone_str.'" stop="'.$programme['fstop'].' '.$current_location_zone_str.'" channel="'.$programme['channel_id'].'">';
 				*/
+				/*
 				$prog.='
 <programme start="'.$programme['start'].' '.$programme['zone'].'" stop="'.$programme['stop'].' '.$programme['zone'].'" channel="'.$programme['channel_id'].'">';
-
+				*/
+				$prog.='
+<programme start="'.$programme['start'].' '.$zonecode.'" stop="'.$programme['stop'].' '.$zonecode.'" channel="'.$programme['channel_id'].'">';
   				if($programme['title']!='')$prog.='
 	<title lang="'.$programme['lang'].'">'.$programme['title'].'</title>';
 				if($programme['description']!='')$prog.='

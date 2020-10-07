@@ -34,6 +34,9 @@
             <a href="javascript:;" onclick="clearConfigCountries();" data-toggle="modal" data-target="#countriesConfigDlg" class="btn btn-sm btn-light font-weight-bold mr-2" data-toggle="tooltip" title="" data-placement="left" data-original-title="Select a country you want to add one.">
                 Add country
             </a>
+			<a href="javascript:;" data-toggle="modal" data-target="#offsetSettingDlg" class="btn btn-sm btn-light font-weight-bold mr-2" data-toggle="tooltip" title="" data-placement="left" data-original-title="Select a country you want to add one.">
+                Offset setting
+            </a>
         </div>
         <!--end::Toolbar-->
     </div>
@@ -197,10 +200,57 @@
     </div>
 </div>
 
+<div class="modal fade" id="offsetSettingDlg" tabindex="-1" role="dialog" aria-labelledby="offsetSettingDlg" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Offset setting dialog</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+			<div class="form-group">
+					<label>Country: </label>
+					<select class="form-control" style="width:100%;" id="offset_country" name="param">
+					<option value="0">___ALL___</option>
+					<?php foreach($epg_countries as $country){?>
+						<option value="<?php echo $country['id'];?>"><?php echo $country['name'];?></option>
+					<?php }?>
+					</select>
+				</div>
+				<div class="form-group">
+					<label>Site: </label>
+					<select class="form-control" style="width:100%;" id="offset_site" name="param">
+						<option value="0">___ALL___</option>
+					</select>
+				</div>
+				<div class="form-group">
+					<label>Channels: </label>
+					<select class="form-control minuteselect" style="width:100%;" id="offset_channel" multiple name="param">
+						<option value="0">___ALL___</option>
+					</select>
+				</div>
+				<div class="form-group">
+					<label>Zone: </label>
+					<input class="form-control" type="number" id="offset_zone"/>
+				</div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal" id="offset_model_close_btn">Close</button>
+                <button type="button" onclick="submitOffsetSetting();" class="btn btn-primary font-weight-bold">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <script>
 'use strict';
 var country_table=new Array(100);
+function submitOffsetSetting(){
+
+}
 function clearConfigCountries(){
 	$('input[name="config_countries"]').each(function(){
 		var id=$(this).prop('id').replace('config_country_','');
@@ -279,10 +329,270 @@ function removeChannels(country,site){
             }
         });
 }
-jQuery(document).ready(function() {
-	
-	
 
+function datatableInit(id){
+	country_table[id]=$('#kt_datatable_'+id).KTDatatable({
+		// datasource definition
+		data: {
+			type: 'remote',
+			source: {
+				read: {
+					url: '/api/epg/getSitesDataTable',
+					//url: HOST_URL + '/api/datatables/demos/customers.php',
+					params:{
+						country:id,
+						csrf_token_allepg: $('#csrf_cookie_allepg').val(),
+					}
+				},
+			},
+			pageSize: 10, // display 20 records per page
+			serverPaging: true,
+			serverFiltering: false,
+			serverSorting: true
+		},
+
+		// layout definition
+		layout: {
+			scroll: false,
+			footer: false,
+		},
+		// column sorting
+		sortable: true,
+		pagination: true,
+		detail: {
+			title: 'Load Channels',
+			content: function(e){
+				$('<div/>').attr('id', 'child_data_ajax_' + e.data.id).appendTo(e.detailCell).KTDatatable({
+					data: {
+						type: 'remote',
+						source: {
+							read: {
+								url: '/api/epg/getChannelsBySiteDataTable',
+								params:{
+									site:e.data.id,
+									csrf_token_allepg: $('#csrf_cookie_allepg').val(),
+								}
+							},
+						},
+						pageSize: 10, // display 20 records per page
+						serverPaging: true,
+						serverFiltering: false,
+						serverSorting: true
+					},
+					// layout definition
+					layout: {
+						scroll: false,
+						footer: false,
+						header:true
+					},
+					// column sorting
+					sortable: true,
+					pagination: true,
+					// columns definition
+					columns: 
+					[
+						{
+							field: 'name',
+							title: 'Name',
+							sortable: 'asc',
+						},
+						{
+							field: 'site_id',
+							title: 'site_id',
+						},
+						{
+							field: 'zone',
+							title: 'Offset',
+						},
+						{
+							field: 'icon',
+							title: 'Icon',
+							sortable: false,
+							template: function(row) {
+								return '<img src="'+row.icon+'">';
+							}
+						},
+						{
+							field: 'url',
+							title: 'Site',
+							sortable: 'asc',
+							template: function(row) {
+								return '<a href="'+row.url+'">'+row.url+'</a>';
+							}
+						}
+					],
+				});
+			},
+		},
+
+		search: {
+			input: $('#kt_datatable_search_query_'+id),
+			key: 'generalSearch'
+		},
+
+		// columns definition
+		columns: 
+		[
+			{
+				field: 'id',
+				title: '',
+				sortable: false,
+				width: 30,
+				textAlign: 'center',
+			}, {
+				field: 'checkbox',
+				title: '',
+				template: '{{id}}',
+				sortable: false,
+				width: 20,
+				textAlign: 'center',
+				selector: {class: 'kt-checkbox--solid'},
+			}, {
+				field: 'name',
+				title: 'Name',
+				sortable: 'asc',
+			}, {
+				field: 'channels',
+				title: 'Channels',
+			},{
+				field: 'status',
+				title: 'Status',
+				template: function(row) {
+					var status = {
+						1: {'title': 'Warning', 'class': 'label-light-primary'},
+						2: {'title': 'Updated', 'class': ' label-light-success'},
+						3: {'title': 'Canceled', 'class': ' label-light-danger'},
+					};
+					return '<span class="label ' + status[row.status].class + ' label-inline font-weight-bold label-lg">' + status[row.status].title + '</span>';
+				},
+			}, {
+				field: 'Actions',
+				title: 'Actions',
+				sortable: false,
+				overflow: 'visible',
+				autoHide: false,
+				template: function(row) {
+					return '\
+						<div class="dropdown dropdown-inline">\
+						<a href="javascript:removeChannels('+id+','+row.id+');" class="btn btn-sm btn-clean btn-icon mr-2" title="Edit details">\
+							<img style="opacity:0.66;" src="../assets/dist/metronic/media/svg/icons/Files/Deleted-file.svg"/>\
+						</a>\
+					';
+				},
+			}
+		],
+	});
+}
+function changeOffestCountry(){
+	var form_data = new FormData();
+    form_data.append('id',$('#offset_country').val());  
+	form_data.append('csrf_token_allepg',$('#csrf_cookie_allepg').val());  
+    $.ajax({
+        url: '/api/epg/getSitesList',
+        data: form_data,
+        cache: false,
+        contentType: false,
+        processData: false,
+        type: 'POST',
+        dataType: "json",
+        success: function (response) {
+            $("#offset_site").empty();
+            $("#offset_site").append($("<option></option>").attr("value", '0').text('___ALL___'));
+            for(var i=0;i<response.length;i++){
+                $("#offset_site").append($("<option></option>").attr("value", response[i].id).text(response[i].name));
+            }
+        },
+        error: function (response) {
+            
+        }
+    });    
+}
+function changeOffestSite(){
+	var form_data = new FormData();
+    form_data.append('id',$('#offset_site').val());  
+	form_data.append('csrf_token_allepg',$('#csrf_cookie_allepg').val());  
+    $.ajax({
+        url: '/api/epg/getChannelsList',
+        data: form_data,
+        cache: false,
+        contentType: false,
+        processData: false,
+        type: 'POST',
+        dataType: "json",
+        success: function (response) {
+            $("#offset_channel").empty();
+            $("#offset_channel").append($("<option></option>").attr("value", '0').text('___ALL___'));
+            for(var i=0;i<response.length;i++){
+                $("#offset_channel").append($("<option></option>").attr("value", response[i].id).text(response[i].name));
+            }
+        },
+        error: function (response) {
+            
+        }
+    });    
+}
+function submitOffsetSetting(){
+	if($('#offset_channel').val()==''){
+		$('#offset_channel').focus();
+		return;
+	}
+	if($('#offset_zone').val()==''||$('#offset_zone').val()<-24||$('#offset_zone').val()>24){
+		$('#offset_zone').focus();
+		return;
+	}
+	var form_data = new FormData();
+    form_data.append('country_id',$('#offset_country').val());  
+	form_data.append('site_id',$('#offset_site').val());  
+	form_data.append('channel_id',$('#offset_channel').val());  
+	form_data.append('zone',$('#offset_zone').val());  
+	form_data.append('csrf_token_allepg',$('#csrf_cookie_allepg').val());  
+    $.ajax({
+        url: '/api/epg/setZoneOffset',
+        data: form_data,
+        cache: false,
+        contentType: false,
+        processData: false,
+        type: 'POST',
+        dataType: "json",
+        success: function (response) {
+			if($('#offset_country').val()>0)country_table[$('#offset_country').val()].reload();
+			else location.reload();
+            $('#offset_model_close_btn').trigger('click');
+        },
+        error: function (response) {
+            
+        }
+    });    
+}
+var prev_select_channel='';
+jQuery(document).ready(function() {
+	$('#offset_country').select2();
+	$('#offset_country').on('change',function(){
+        changeOffestCountry();
+    });
+	$('#offset_site').select2();
+	$('#offset_site').on('change',function(){
+        changeOffestSite();
+    });
+	$('#offset_channel').select2({
+		placeholder: 'All country or single/multi countries',
+		tags: true
+	});
+	$('#offset_channel').on('change',function(e){
+		var cur=(new String($(this).val()));
+		var pre_cur=(new String(prev_select_channel));
+		if(cur==pre_cur||cur=='0')return;
+		cur=cur.split(',');
+		pre_cur=pre_cur.split(',');
+		if(eval(cur[0])==0){
+			if(prev_select_channel!=''&&pre_cur[0]=='0'){
+				$('#offset_channel').val(cur[1]).trigger('change');		
+			}else{
+				$('#offset_channel').val(0).trigger('change');	
+			}
+		}
+		prev_select_channel=$(this).val();
+	});
 	$("#import_channel_file").change(function () {
 		var input=$(this);
 		var form_data = new FormData();
@@ -327,157 +637,5 @@ jQuery(document).ready(function() {
 		var id=eval($(this).prop('id').replace('kt_datatable_',''));
 		datatableInit(id);
 	});
-	
-	function datatableInit(id){
-		country_table[id]=$('#kt_datatable_'+id).KTDatatable({
-			// datasource definition
-			data: {
-				type: 'remote',
-				source: {
-					read: {
-						url: '/api/epg/getSitesDataTable',
-						//url: HOST_URL + '/api/datatables/demos/customers.php',
-						params:{
-							country:id,
-							csrf_token_allepg: $('#csrf_cookie_allepg').val(),
-						}
-					},
-				},
-				pageSize: 10, // display 20 records per page
-				serverPaging: true,
-				serverFiltering: false,
-				serverSorting: true
-			},
-
-			// layout definition
-			layout: {
-				scroll: false,
-				footer: false,
-			},
-			// column sorting
-			sortable: true,
-			pagination: true,
-			detail: {
-				title: 'Load Channels',
-				content: function(e){
-					$('<div/>').attr('id', 'child_data_ajax_' + e.data.id).appendTo(e.detailCell).KTDatatable({
-						data: {
-							type: 'remote',
-							source: {
-								read: {
-									url: '/api/epg/getChannelsBySiteDataTable',
-									params:{
-										site:e.data.id,
-										csrf_token_allepg: $('#csrf_cookie_allepg').val(),
-									}
-								},
-							},
-							pageSize: 10, // display 20 records per page
-							serverPaging: true,
-							serverFiltering: false,
-							serverSorting: true
-						},
-						// layout definition
-						layout: {
-							scroll: false,
-							footer: false,
-							header:true
-						},
-						// column sorting
-						sortable: true,
-						pagination: true,
-						// columns definition
-						columns: 
-						[
-							{
-								field: 'name',
-								title: 'Name',
-								sortable: 'asc',
-							},
-							{
-								field: 'site_id',
-								title: 'site_id',
-							},
-							{
-								field: 'icon',
-								title: 'Icon',
-								sortable: false,
-								template: function(row) {
-									return '<img src="'+row.icon+'">';
-								}
-							},
-							{
-								field: 'url',
-								title: 'Site',
-								sortable: 'asc',
-								template: function(row) {
-									return '<a href="'+row.url+'">'+row.url+'</a>';
-								}
-							}
-						],
-					});
-				},
-			},
-
-			search: {
-				input: $('#kt_datatable_search_query_'+id),
-				key: 'generalSearch'
-			},
-
-			// columns definition
-			columns: 
-			[
-				{
-					field: 'id',
-					title: '',
-					sortable: false,
-					width: 30,
-					textAlign: 'center',
-				}, {
-					field: 'checkbox',
-					title: '',
-					template: '{{id}}',
-					sortable: false,
-					width: 20,
-					textAlign: 'center',
-					selector: {class: 'kt-checkbox--solid'},
-				}, {
-					field: 'name',
-					title: 'Name',
-					sortable: 'asc',
-				}, {
-					field: 'channels',
-					title: 'Channels',
-				}, {
-					field: 'status',
-					title: 'Status',
-					template: function(row) {
-						var status = {
-							1: {'title': 'Warning', 'class': 'label-light-primary'},
-							2: {'title': 'Updated', 'class': ' label-light-success'},
-							3: {'title': 'Canceled', 'class': ' label-light-danger'},
-						};
-						return '<span class="label ' + status[row.status].class + ' label-inline font-weight-bold label-lg">' + status[row.status].title + '</span>';
-					},
-				}, {
-					field: 'Actions',
-					title: 'Actions',
-					sortable: false,
-					overflow: 'visible',
-					autoHide: false,
-					template: function(row) {
-						return '\
-	                        <div class="dropdown dropdown-inline">\
-	                        <a href="javascript:removeChannels('+id+','+row.id+');" class="btn btn-sm btn-clean btn-icon mr-2" title="Edit details">\
-	                            <img style="opacity:0.66;" src="../assets/dist/metronic/media/svg/icons/Files/Deleted-file.svg"/>\
-	                        </a>\
-	                    ';
-					},
-				}
-			],
-		});
-	}
-
-
 });
 </script>
