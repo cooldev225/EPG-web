@@ -186,9 +186,6 @@ class Epg extends MY_Controller {
 		$xmldata=substr($xmldata,strpos($xmldata,'update="i" site="')+17);
 		$site=substr($xmldata,0,strpos($xmldata,'"'));
 
-		$xmldata=substr($xmldata,strpos($xmldata,'site="')+6);
-		//$site=substr($xmldata,0,strpos($xmldata,'"'));
-		$xmldata=substr($xmldata, strlen($site)+2);
 		$rows=$this->users->execute_query("select * from epg_site where name='{$site}'");
 		$sid=0;
 		if(count($rows)){
@@ -288,11 +285,11 @@ class Epg extends MY_Controller {
 				'status'=>1
 			);
 			$this->users->execute_insert('epg_status',$row);
-
 			for($xmldata=substr($xmldata,strpos($xmldata,'<channel'));;) {
 				$channel=substr($xmldata,0,strpos($xmldata,'/channel>')+9);
 				$xmldata=substr($xmldata,strpos($xmldata,'/channel>')+9);
 
+				
 				$channel=substr($channel,strpos($channel,'id="')+4);
 				$channel_id=substr($channel,0,strpos($channel,'">'));
 				$icon='';$url='';
@@ -301,17 +298,16 @@ class Epg extends MY_Controller {
 					$channel=substr($channel,strpos($channel,'src="')+5);
 					$icon=substr($channel,0,strpos($channel,'"'));
 				}
-
+				
 				if(!strpos($channel, '<url>')===false){
 					$channel=substr($channel,strpos($channel,'<url>')+5);
 					$url=substr($channel,0,strpos($channel,'</url>'));	
 				}
 
-				$this->users->execute_query_no_result("update epg_channel set icon='{$icon}',url='{$url}' where xmltv_id='{$channel_id}'");
-
-				if($channel==''||$url==''||$icon=='')break;		
+				$this->users->execute_query_no_result("update epg_channel set icon='{$icon}',url='{$url}' where xmltv_id='".$channel_id."'");//mb_convert_encoding($channel_id, 'UTF-8', 'Windows-1252')
+				if($channel==''||strpos($xmldata, '<channel')===false)break;		
 			}
-
+			
 	  		for($xmldata=substr($xmldata,strpos($xmldata,'<programme'));;) {
 	  			$programme=substr($xmldata,0,strpos($xmldata,'/programme>')+11);
 	  			$xmldata=substr($xmldata,strpos($xmldata,'/programme>')+11);
@@ -326,6 +322,8 @@ class Epg extends MY_Controller {
 				$programme=substr($programme,strpos($programme,'channel="')+9);
 				$channel=substr($programme,0,strpos($programme,'">'));
 				$programme=substr($programme, strpos($programme,'">')+2);
+
+				$etc=substr($programme, 0, strpos($programme,'</programme>'));
 
 				$lang=$lang1='';
 				$title=$title1='';
@@ -381,7 +379,7 @@ class Epg extends MY_Controller {
 					'lang1'=>$lang1,
 					'title1'=>$title1,
 					'description1'=>$description1,
-					'etc'=>''
+					'etc'=>$etc
 				);
 				$this->users->execute_insert('epg_programme',$row);
 			}
@@ -475,6 +473,7 @@ class Epg extends MY_Controller {
 				$programme['stop']=str_replace('-','',str_replace(' ','',str_replace(':','',$programme['stop'])));
 				$prog.='
 <programme start="'.$programme['start'].' '.$zonecode.'" stop="'.$programme['stop'].' '.$zonecode.'" channel="'.$programme['channel_id'].'">';
+				/*
   				if($programme['title']!='')$prog.='
 	<title lang="'.$programme['lang'].'">'.$programme['title'].'</title>';
 				if($programme['description']!='')$prog.='
@@ -483,6 +482,8 @@ class Epg extends MY_Controller {
 	<title lang="'.$programme['lang1'].'">'.$programme['title1'].'</title>';
 				if($programme['description1']!='')$prog.='
 	<desc lang="'.$programme['lang1'].'">'.$programme['description1'].'</desc>';
+	*/
+				$prog.=$programme['etc'];
   				$prog.='
 </programme>';
   			}
