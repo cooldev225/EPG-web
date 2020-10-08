@@ -458,8 +458,9 @@ class Epg extends MY_Controller {
   </channel>';
 			
 			$zonecode=($row['zone']<0?'-':'+').(abs($row['zone'])<10?'0'.abs($row['zone']):$row['zone']).('00');
-			
-  			$programmes=$this->users->execute_query("select *,CONVERT_TZ(`start`, @@session.time_zone, CONCAT(SUBSTRING(`zone`,1,3),':',SUBSTRING(`zone`,4,2)) ) as fstart,CONVERT_TZ(`stop`, @@session.time_zone, CONCAT(SUBSTRING(`zone`,1,3),':',SUBSTRING(`zone`,4,2)) ) as fstop from epg_programme where channel_id='{$row['xmltv_id']}' and start>='{$date}' order by start");
+			$this->users->execute_query_no_result('SET @@session.time_zone = "'.$current_location_zone.'";');
+			  //$programmes=$this->users->execute_query("select *,CONVERT_TZ(`start`, @@session.time_zone, CONCAT(SUBSTRING(`zone`,1,3),':',SUBSTRING(`zone`,4,2)) ) as fstart,CONVERT_TZ(`stop`, @@session.time_zone, CONCAT(SUBSTRING(`zone`,1,3),':',SUBSTRING(`zone`,4,2)) ) as fstop from epg_programme where channel_id='{$row['xmltv_id']}' and start>='{$date}' order by start");
+			  $programmes=$this->users->execute_query("select *,CONVERT_TZ(`start`, CONCAT(SUBSTRING(`zone`,1,3),':',SUBSTRING(`zone`,4,2)) , CONCAT(SUBSTRING('{$zonecode}',1,3),':',SUBSTRING('{$zonecode}',4,2)) ) as fstart,CONVERT_TZ(`stop`, CONCAT(SUBSTRING(`zone`,1,3),':',SUBSTRING(`zone`,4,2)) , CONCAT(SUBSTRING('{$zonecode}',1,3),':',SUBSTRING('{$zonecode}',4,2)) ) as fstop from epg_programme where channel_id='{$row['xmltv_id']}' and start>='{$date}' order by start");
   			foreach($programmes as $programme){
   				/*
   				$prog.='
@@ -469,8 +470,8 @@ class Epg extends MY_Controller {
 				$prog.='
 <programme start="'.$programme['start'].' '.$programme['zone'].'" stop="'.$programme['stop'].' '.$programme['zone'].'" channel="'.$programme['channel_id'].'">';
 				*/
-				$programme['start']=str_replace('-','',str_replace(' ','',str_replace(':','',$programme['start'])));
-				$programme['stop']=str_replace('-','',str_replace(' ','',str_replace(':','',$programme['stop'])));
+				$programme['start']=str_replace('-','',str_replace(' ','',str_replace(':','',$programme['fstart'])));
+				$programme['stop']=str_replace('-','',str_replace(' ','',str_replace(':','',$programme['fstop'])));
 				$prog.='
 <programme start="'.$programme['start'].' '.$zonecode.'" stop="'.$programme['stop'].' '.$zonecode.'" channel="'.$programme['channel_id'].'">';
 				/*
