@@ -56,7 +56,7 @@ class Order extends Admin_Controller {
 			$res['aaData'][$i]['num']=$i+1;
 			$t='';
 			foreach(explode(',',$res['aaData'][$i]['countries']) as $country){
-				$t.=($t==''?'':',').$country;
+				$t.=($t==''?'':',').$countries[$country];
 			}
 			$res['aaData'][$i]['countries']=$t;
 		}
