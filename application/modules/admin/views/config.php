@@ -61,24 +61,135 @@
 			<!--epg widget-->
 			<div class="col-xxl-12 col-lg-12 mb-7">
 				<!--begin::Card-->
-				<div class="card card-custom">
-					<div class="card-header flex-wrap border-0 pt-6 pb-0">
-						<div class="card-title">
-							<h3 class="card-label">
-								Config Table
-								<span class="d-block text-muted pt-2 font-size-sm">view or edit and set fields</span>
-							</h3>
-						</div>
-						<div class="card-toolbar">
-							
-						</div>
-					</div>
-					<div class="card-body">
-						<!--begin: Datatable-->
-						
-						<!--end: Datatable-->
-					</div>
-				</div>
+				<div class="card card-custom gutter-b">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <h3 class="card-label">
+                                Config settings
+                            </h3>
+                            
+                        </div>
+                        <a href="javascript:;" class="btn btn-light-primary font-weight-bold mt-4" style="float: right;height: 40px;" onclick="submitSettingsAction();">Save changes</a>
+                    </div>
+                    <div class="card-body">
+                        <!--begin::Accordion-->
+                        <div class="accordion accordion-light accordion-light-borderless accordion-svg-toggle" id="accordionExample7">
+                            <div class="card">
+                                <div class="card-header" id="headingOne7">
+                                    <div class="card-title" data-toggle="collapse" data-target="#collapseOne7">
+                                        <span class="svg-icon svg-icon-primary"><!--begin::Svg Icon | path:assets/media/svg/icons/Navigation/Angle-double-right.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                <polygon points="0 0 24 0 24 24 0 24"/>
+                                                <path d="M12.2928955,6.70710318 C11.9023712,6.31657888 11.9023712,5.68341391 12.2928955,5.29288961 C12.6834198,4.90236532 13.3165848,4.90236532 13.7071091,5.29288961 L19.7071091,11.2928896 C20.085688,11.6714686 20.0989336,12.281055 19.7371564,12.675721 L14.2371564,18.675721 C13.863964,19.08284 13.2313966,19.1103429 12.8242777,18.7371505 C12.4171587,18.3639581 12.3896557,17.7313908 12.7628481,17.3242718 L17.6158645,12.0300721 L12.2928955,6.70710318 Z" fill="#000000" fill-rule="nonzero"/>
+                                                <path d="M3.70710678,15.7071068 C3.31658249,16.0976311 2.68341751,16.0976311 2.29289322,15.7071068 C1.90236893,15.3165825 1.90236893,14.6834175 2.29289322,14.2928932 L8.29289322,8.29289322 C8.67147216,7.91431428 9.28105859,7.90106866 9.67572463,8.26284586 L15.6757246,13.7628459 C16.0828436,14.1360383 16.1103465,14.7686056 15.7371541,15.1757246 C15.3639617,15.5828436 14.7313944,15.6103465 14.3242754,15.2371541 L9.03007575,10.3841378 L3.70710678,15.7071068 Z" fill="#000000" fill-rule="nonzero" opacity="0.3" transform="translate(9.000003, 11.999999) rotate(-270.000000) translate(-9.000003, -11.999999) "/>
+                                            </g>
+                                        </svg><!--end::Svg Icon--></span>
+                                        <div class="card-label pl-4">Payment getway setup</div>
+                                    </div>
+                                </div>
+                                <div id="collapseOne7" class="collapse show" data-parent="#accordionExample7">
+                                    <div class="card-body pl-12">
+
+                                        <div class="card-body">
+                                            
+                                        <div class="form-group">
+                                                <label>Username <span class="text-danger">*</span></label>
+                                                <input type="text" class="form-control"  placeholder="gateway account username" id="payment_gateway_username" value="<?php echo isset($meta_optioins['payment_gateway_username'])?$meta_optioins['payment_gateway_username']:'';?>" style="max-width:300px;" autocomplete="off"/>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Password <span class="text-danger">*</span></label>
+                                                <input type="password" class="form-control"  placeholder="gateway account password" id="payment_gateway_password" value="<?php echo isset($meta_optioins['payment_gateway_password'])?$meta_optioins['payment_gateway_password']:'';?>" style="max-width:300px;" autocomplete="off"/>
+                                                <span class="form-text text-muted">Don't say your password to anyone else.</span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Signature <span class="text-danger">*</span></label>
+                                                <input type="email" class="form-control"  placeholder="signature" id="payment_gateway_signature" value="<?php echo isset($meta_optioins['payment_gateway_signature'])?$meta_optioins['payment_gateway_signature']:'';?>" style="max-width:600px;" autocomplete="off"/>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-header" id="headingTwo7">
+                                    <div class="card-title collapsed" data-toggle="collapse" data-target="#collapseTwo7">
+                                        <span class="svg-icon svg-icon-primary"><!--begin::Svg Icon | path:assets/media/svg/icons/Navigation/Angle-double-right.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                <polygon points="0 0 24 0 24 24 0 24"/>
+                                                <path d="M12.2928955,6.70710318 C11.9023712,6.31657888 11.9023712,5.68341391 12.2928955,5.29288961 C12.6834198,4.90236532 13.3165848,4.90236532 13.7071091,5.29288961 L19.7071091,11.2928896 C20.085688,11.6714686 20.0989336,12.281055 19.7371564,12.675721 L14.2371564,18.675721 C13.863964,19.08284 13.2313966,19.1103429 12.8242777,18.7371505 C12.4171587,18.3639581 12.3896557,17.7313908 12.7628481,17.3242718 L17.6158645,12.0300721 L12.2928955,6.70710318 Z" fill="#000000" fill-rule="nonzero"/>
+                                                <path d="M3.70710678,15.7071068 C3.31658249,16.0976311 2.68341751,16.0976311 2.29289322,15.7071068 C1.90236893,15.3165825 1.90236893,14.6834175 2.29289322,14.2928932 L8.29289322,8.29289322 C8.67147216,7.91431428 9.28105859,7.90106866 9.67572463,8.26284586 L15.6757246,13.7628459 C16.0828436,14.1360383 16.1103465,14.7686056 15.7371541,15.1757246 C15.3639617,15.5828436 14.7313944,15.6103465 14.3242754,15.2371541 L9.03007575,10.3841378 L3.70710678,15.7071068 Z" fill="#000000" fill-rule="nonzero" opacity="0.3" transform="translate(9.000003, 11.999999) rotate(-270.000000) translate(-9.000003, -11.999999) "/>
+                                            </g>
+                                        </svg><!--end::Svg Icon--></span>
+                                        <div class="card-label pl-4">Welcome email template</div>
+                                    </div>
+                                </div>
+                                <div id="collapseTwo7" class="collapse" data-parent="#accordionExample7">
+                                    <div class="card-body pl-12">
+                                        <textarea id="welcome_email_template" class="tox-target" style="height:100px;"><?php echo isset($meta_optioins['welcome_email_template'])?$meta_optioins['welcome_email_template']:'';?></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-header" id="headingThree7">
+                                    <div class="card-title collapsed" data-toggle="collapse" data-target="#collapseThree7">
+                                        <span class="svg-icon svg-icon-primary"><!--begin::Svg Icon | path:assets/media/svg/icons/Navigation/Angle-double-right.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                <polygon points="0 0 24 0 24 24 0 24"/>
+                                                <path d="M12.2928955,6.70710318 C11.9023712,6.31657888 11.9023712,5.68341391 12.2928955,5.29288961 C12.6834198,4.90236532 13.3165848,4.90236532 13.7071091,5.29288961 L19.7071091,11.2928896 C20.085688,11.6714686 20.0989336,12.281055 19.7371564,12.675721 L14.2371564,18.675721 C13.863964,19.08284 13.2313966,19.1103429 12.8242777,18.7371505 C12.4171587,18.3639581 12.3896557,17.7313908 12.7628481,17.3242718 L17.6158645,12.0300721 L12.2928955,6.70710318 Z" fill="#000000" fill-rule="nonzero"/>
+                                                <path d="M3.70710678,15.7071068 C3.31658249,16.0976311 2.68341751,16.0976311 2.29289322,15.7071068 C1.90236893,15.3165825 1.90236893,14.6834175 2.29289322,14.2928932 L8.29289322,8.29289322 C8.67147216,7.91431428 9.28105859,7.90106866 9.67572463,8.26284586 L15.6757246,13.7628459 C16.0828436,14.1360383 16.1103465,14.7686056 15.7371541,15.1757246 C15.3639617,15.5828436 14.7313944,15.6103465 14.3242754,15.2371541 L9.03007575,10.3841378 L3.70710678,15.7071068 Z" fill="#000000" fill-rule="nonzero" opacity="0.3" transform="translate(9.000003, 11.999999) rotate(-270.000000) translate(-9.000003, -11.999999) "/>
+                                            </g>
+                                        </svg><!--end::Svg Icon--></span>
+                                        <div class="card-label pl-4">Reset password email template</div>
+                                    </div>
+                                </div>
+                                <div id="collapseThree7" class="collapse" data-parent="#accordionExample7">
+                                    <div class="card-body pl-12">
+                                        <textarea id="reset_password_email_template" class="tox-target" style="height:100px;"><?php echo isset($meta_optioins['reset_password_email_template'])?$meta_optioins['reset_password_email_template']:'';?></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-header" id="headingThree7">
+                                    <div class="card-title collapsed" data-toggle="collapse" data-target="#collapseFour7">
+                                        <span class="svg-icon svg-icon-primary"><!--begin::Svg Icon | path:assets/media/svg/icons/Navigation/Angle-double-right.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                <polygon points="0 0 24 0 24 24 0 24"/>
+                                                <path d="M12.2928955,6.70710318 C11.9023712,6.31657888 11.9023712,5.68341391 12.2928955,5.29288961 C12.6834198,4.90236532 13.3165848,4.90236532 13.7071091,5.29288961 L19.7071091,11.2928896 C20.085688,11.6714686 20.0989336,12.281055 19.7371564,12.675721 L14.2371564,18.675721 C13.863964,19.08284 13.2313966,19.1103429 12.8242777,18.7371505 C12.4171587,18.3639581 12.3896557,17.7313908 12.7628481,17.3242718 L17.6158645,12.0300721 L12.2928955,6.70710318 Z" fill="#000000" fill-rule="nonzero"/>
+                                                <path d="M3.70710678,15.7071068 C3.31658249,16.0976311 2.68341751,16.0976311 2.29289322,15.7071068 C1.90236893,15.3165825 1.90236893,14.6834175 2.29289322,14.2928932 L8.29289322,8.29289322 C8.67147216,7.91431428 9.28105859,7.90106866 9.67572463,8.26284586 L15.6757246,13.7628459 C16.0828436,14.1360383 16.1103465,14.7686056 15.7371541,15.1757246 C15.3639617,15.5828436 14.7313944,15.6103465 14.3242754,15.2371541 L9.03007575,10.3841378 L3.70710678,15.7071068 Z" fill="#000000" fill-rule="nonzero" opacity="0.3" transform="translate(9.000003, 11.999999) rotate(-270.000000) translate(-9.000003, -11.999999) "/>
+                                            </g>
+                                        </svg><!--end::Svg Icon--></span>
+                                        <div class="card-label pl-4">Invoice confirmation email template</div>
+                                    </div>
+                                </div>
+                                <div id="collapseFour7" class="collapse" data-parent="#accordionExample7">
+                                    <div class="card-body pl-12">
+                                        <textarea id="invoice_confirmation_email_template" class="tox-target" style="height:100px;"><?php echo isset($meta_optioins['invoice_confirmation_email_template'])?$meta_optioins['invoice_confirmation_email_template']:'';?></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-header" id="headingThree7">
+                                    <div class="card-title collapsed" data-toggle="collapse" data-target="#collapseFive7">
+                                        <span class="svg-icon svg-icon-primary"><!--begin::Svg Icon | path:assets/media/svg/icons/Navigation/Angle-double-right.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                <polygon points="0 0 24 0 24 24 0 24"/>
+                                                <path d="M12.2928955,6.70710318 C11.9023712,6.31657888 11.9023712,5.68341391 12.2928955,5.29288961 C12.6834198,4.90236532 13.3165848,4.90236532 13.7071091,5.29288961 L19.7071091,11.2928896 C20.085688,11.6714686 20.0989336,12.281055 19.7371564,12.675721 L14.2371564,18.675721 C13.863964,19.08284 13.2313966,19.1103429 12.8242777,18.7371505 C12.4171587,18.3639581 12.3896557,17.7313908 12.7628481,17.3242718 L17.6158645,12.0300721 L12.2928955,6.70710318 Z" fill="#000000" fill-rule="nonzero"/>
+                                                <path d="M3.70710678,15.7071068 C3.31658249,16.0976311 2.68341751,16.0976311 2.29289322,15.7071068 C1.90236893,15.3165825 1.90236893,14.6834175 2.29289322,14.2928932 L8.29289322,8.29289322 C8.67147216,7.91431428 9.28105859,7.90106866 9.67572463,8.26284586 L15.6757246,13.7628459 C16.0828436,14.1360383 16.1103465,14.7686056 15.7371541,15.1757246 C15.3639617,15.5828436 14.7313944,15.6103465 14.3242754,15.2371541 L9.03007575,10.3841378 L3.70710678,15.7071068 Z" fill="#000000" fill-rule="nonzero" opacity="0.3" transform="translate(9.000003, 11.999999) rotate(-270.000000) translate(-9.000003, -11.999999) "/>
+                                            </g>
+                                        </svg><!--end::Svg Icon--></span>
+                                        <div class="card-label pl-4">Product email template</div>
+                                    </div>
+                                </div>
+                                <div id="collapseFive7" class="collapse" data-parent="#accordionExample7">
+                                    <div class="card-body pl-12">
+                                        <textarea id="product_email_template" class="tox-target" style="height:100px;"><?php echo isset($meta_optioins['product_email_template'])?$meta_optioins['product_email_template']:'';?></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end::Accordion-->
+                    </div>
+                </div>
 				<!--end::Card-->
 			</div>
 		</div>
@@ -90,6 +201,45 @@
 <!--end::Entry-->
 
 <input type="hidden" id="csrf_cookie_allepg" value="<?php echo $this->security->get_csrf_hash(); ?>" />
+<script src="../assets/dist/metronic/plugins/custom/tinymce/tinymce.bundle.js"></script>
 <script>
-
+var tinymceToolbar='styleselect fontselect fontsizeselect | undo redo | cut copy paste | bold italic | alignleft aligncenter alignright alignjustify';
+var tinymcePlugin='advlist autolink link image lists charmap print preview';
+jQuery(document).ready(function(){
+    $('#welcome_email_template').val(unescape($('#welcome_email_template').html()));
+    $('#reset_password_email_template').val(unescape($('#reset_password_email_template').html()));
+    $('#invoice_confirmation_email_template').val(unescape($('#invoice_confirmation_email_template').html()));
+    $('#product_email_template').val(unescape($('#product_email_template').html()));
+    tinymce.init({selector: '#welcome_email_template',entity_encoding : "raw",menubar: false,toolbar:tinymceToolbar, plugins:tinymcePlugin});
+    tinymce.init({selector: '#reset_password_email_template',entity_encoding : "raw",menubar: false,toolbar:tinymceToolbar, plugins:tinymcePlugin});
+    tinymce.init({selector: '#invoice_confirmation_email_template',entity_encoding : "raw",menubar: false,toolbar:tinymceToolbar, plugins:tinymcePlugin});
+    tinymce.init({selector: '#product_email_template',entity_encoding : "raw",menubar: false,toolbar:tinymceToolbar, plugins:tinymcePlugin});
+});
+function submitSettingsAction(){
+    var form_data = new FormData();
+    form_data.append('payment_gateway_username',$('#payment_gateway_username').val());  
+	form_data.append('payment_gateway_password',$('#payment_gateway_password').val());  
+	form_data.append('payment_gateway_signature',$('#payment_gateway_signature').val());  
+	form_data.append('welcome_email_template',escape(tinyMCE.get('welcome_email_template').getContent()));  
+    form_data.append('reset_password_email_template',escape(tinyMCE.get('reset_password_email_template').getContent()));  
+    form_data.append('invoice_confirmation_email_template',escape(tinyMCE.get('invoice_confirmation_email_template').getContent()));  
+    form_data.append('product_email_template',escape(tinyMCE.get('product_email_template').getContent()));  
+	form_data.append('csrf_token_allepg',$('#csrf_cookie_allepg').val());  
+    console.log(tinyMCE.Editor);
+    $.ajax({
+        url: 'config/setMetaOptions',
+        data: form_data,
+        cache: false,
+        contentType: false,
+        processData: false,
+        type: 'POST',
+        dataType: "json",
+        success: function (response) {
+			location.reload();
+        },
+        error: function (response) {
+            
+        }
+    });
+}
 </script>

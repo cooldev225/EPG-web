@@ -65,7 +65,7 @@ class Order extends Admin_Controller {
 	}
 	public function saveOrder()
 	{
-        header('Content-Type: application/json');	
+        header('Content-Type: application/json');
         $id=$_POST['id'];
         $row=array(
             'id'=>$id,
