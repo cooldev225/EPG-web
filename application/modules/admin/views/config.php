@@ -76,7 +76,7 @@
                         <div class="accordion accordion-light accordion-light-borderless accordion-svg-toggle" id="accordionExample7">
                             <div class="card">
                                 <div class="card-header" id="headingOne7">
-                                    <div class="card-title" data-toggle="collapse" data-target="#collapseOne7">
+                                    <div class="card-title collapsed" data-toggle="collapse" data-target="#collapseOne7">
                                         <span class="svg-icon svg-icon-primary"><!--begin::Svg Icon | path:assets/media/svg/icons/Navigation/Angle-double-right.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
                                             <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                                                 <polygon points="0 0 24 0 24 24 0 24"/>
@@ -87,12 +87,10 @@
                                         <div class="card-label pl-4">Payment getway setup</div>
                                     </div>
                                 </div>
-                                <div id="collapseOne7" class="collapse show" data-parent="#accordionExample7">
+                                <div id="collapseOne7" class="collapse" data-parent="#accordionExample7">
                                     <div class="card-body pl-12">
-
-                                        <div class="card-body">
-                                            
-                                        <div class="form-group">
+                                        <div class="card-body">                                            
+                                            <div class="form-group">
                                                 <label>Username <span class="text-danger">*</span></label>
                                                 <input type="text" class="form-control"  placeholder="gateway account username" id="payment_gateway_username" value="<?php echo isset($meta_optioins['payment_gateway_username'])?$meta_optioins['payment_gateway_username']:'';?>" style="max-width:300px;" autocomplete="off"/>
                                             </div>
@@ -106,7 +104,6 @@
                                                 <input type="email" class="form-control"  placeholder="signature" id="payment_gateway_signature" value="<?php echo isset($meta_optioins['payment_gateway_signature'])?$meta_optioins['payment_gateway_signature']:'';?>" style="max-width:600px;" autocomplete="off"/>
                                             </div>
                                         </div>
-                                    </form>
                                     </div>
                                 </div>
                             </div>
@@ -149,7 +146,7 @@
                                 </div>
                             </div>
                             <div class="card">
-                                <div class="card-header" id="headingThree7">
+                                <div class="card-header" id="headingFour7">
                                     <div class="card-title collapsed" data-toggle="collapse" data-target="#collapseFour7">
                                         <span class="svg-icon svg-icon-primary"><!--begin::Svg Icon | path:assets/media/svg/icons/Navigation/Angle-double-right.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
                                             <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -168,7 +165,7 @@
                                 </div>
                             </div>
                             <div class="card">
-                                <div class="card-header" id="headingThree7">
+                                <div class="card-header" id="headingFive7">
                                     <div class="card-title collapsed" data-toggle="collapse" data-target="#collapseFive7">
                                         <span class="svg-icon svg-icon-primary"><!--begin::Svg Icon | path:assets/media/svg/icons/Navigation/Angle-double-right.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
                                             <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -183,6 +180,50 @@
                                 <div id="collapseFive7" class="collapse" data-parent="#accordionExample7">
                                     <div class="card-body pl-12">
                                         <textarea id="product_email_template" class="tox-target" style="height:100px;"><?php echo isset($meta_optioins['product_email_template'])?$meta_optioins['product_email_template']:'';?></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-header" id="headingSix7">
+                                    <div class="card-title collapsed" data-toggle="collapse" data-target="#collapseSix7">
+                                        <span class="svg-icon svg-icon-primary"><!--begin::Svg Icon | path:assets/media/svg/icons/Navigation/Angle-double-right.svg--><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                <polygon points="0 0 24 0 24 24 0 24"/>
+                                                <path d="M12.2928955,6.70710318 C11.9023712,6.31657888 11.9023712,5.68341391 12.2928955,5.29288961 C12.6834198,4.90236532 13.3165848,4.90236532 13.7071091,5.29288961 L19.7071091,11.2928896 C20.085688,11.6714686 20.0989336,12.281055 19.7371564,12.675721 L14.2371564,18.675721 C13.863964,19.08284 13.2313966,19.1103429 12.8242777,18.7371505 C12.4171587,18.3639581 12.3896557,17.7313908 12.7628481,17.3242718 L17.6158645,12.0300721 L12.2928955,6.70710318 Z" fill="#000000" fill-rule="nonzero"/>
+                                                <path d="M3.70710678,15.7071068 C3.31658249,16.0976311 2.68341751,16.0976311 2.29289322,15.7071068 C1.90236893,15.3165825 1.90236893,14.6834175 2.29289322,14.2928932 L8.29289322,8.29289322 C8.67147216,7.91431428 9.28105859,7.90106866 9.67572463,8.26284586 L15.6757246,13.7628459 C16.0828436,14.1360383 16.1103465,14.7686056 15.7371541,15.1757246 C15.3639617,15.5828436 14.7313944,15.6103465 14.3242754,15.2371541 L9.03007575,10.3841378 L3.70710678,15.7071068 Z" fill="#000000" fill-rule="nonzero" opacity="0.3" transform="translate(9.000003, 11.999999) rotate(-270.000000) translate(-9.000003, -11.999999) "/>
+                                            </g>
+                                        </svg><!--end::Svg Icon--></span>
+                                        <div class="card-label pl-4">Country setting</div>
+                                    </div>
+                                </div>
+                                <div id="collapseSix7" class="collapse" data-parent="#accordionExample7">
+                                    <div class="card-body pl-12">
+                                        <div class="card-body">                                            
+                                        <div class="form-group row">
+                                                <div class="col-8">
+                                                    <input type='hidden' id="counytriesList" value='<?php echo json_encode($epg_countries_all);?>'>
+                                                    <select class="form-control" style="width:100%;" id="edit_country_id" class="form-control select2">
+                                                    <?php
+                                                    foreach($epg_countries_all as $country){
+                                                        echo "<option value='{$country['id']}'>".$country['name'].($country['site_count']>0?" ,        ".$country['site_count'].($country['site_count']>1?" sites":" site"):"").($country['channel_count']>0?" ,      ".$country['channel_count'].($country['channel_count']>1?" channels":" channel"):"")."</option>";
+                                                    }
+                                                    ?>
+                                                    </select>
+                                                </div>
+                                                <div class="col-4">
+                                                    <button type="button" class="btn btn-outline-danger" id="edit_country_delete_btn" onclick="submitCountryAction(2);">Delete</button>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-8">                                                
+                                                    <input class="form-control" type="text" value="" id='edit_country_name'/>
+                                                </div>
+                                                <div class="col-4">
+                                                    <button type="button" class="btn btn-outline-primary mr-2" id="edit_country_add_btn" onclick="submitCountryAction(0);">Add</button>
+                                                    <button type="button" class="btn btn-outline-success" id="edit_country_update_btn" onclick="submitCountryAction(1);">Update</button>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -205,6 +246,7 @@
 <script>
 var tinymceToolbar='styleselect fontselect fontsizeselect | undo redo | cut copy paste | bold italic | alignleft aligncenter alignright alignjustify';
 var tinymcePlugin='advlist autolink link image lists charmap print preview';
+var countriesList='';
 jQuery(document).ready(function(){
     $('#welcome_email_template').val(unescape($('#welcome_email_template').html()));
     $('#reset_password_email_template').val(unescape($('#reset_password_email_template').html()));
@@ -214,7 +256,38 @@ jQuery(document).ready(function(){
     tinymce.init({selector: '#reset_password_email_template',entity_encoding : "raw",menubar: false,toolbar:tinymceToolbar, plugins:tinymcePlugin});
     tinymce.init({selector: '#invoice_confirmation_email_template',entity_encoding : "raw",menubar: false,toolbar:tinymceToolbar, plugins:tinymcePlugin});
     tinymce.init({selector: '#product_email_template',entity_encoding : "raw",menubar: false,toolbar:tinymceToolbar, plugins:tinymcePlugin});
+
+    countriesList=$.parseJSON($('#counytriesList').val());
+    $('#edit_country_id').select2();
+    $('#edit_country_id').on('change',function(){
+        changeCountry();
+    });
+    $('#edit_country_name').on('keyup',function(e){
+        $('#edit_country_add_btn').fadeIn();
+        $('#edit_country_update_btn').fadeIn();
+        for(var i=0;i<countriesList.length;i++){
+            if($('#edit_country_name').val()==countriesList[i].name){
+                $('#edit_country_add_btn').fadeOut();
+                $('#edit_country_update_btn').fadeOut();
+                break;
+            }
+        }    
+    });
 });
+
+function changeCountry(){
+    for(var i=0;i<countriesList.length;i++){
+        if($('#edit_country_id').val()==countriesList[i].id){
+            if(countriesList[i].site_count>0){
+                $('#edit_country_delete_btn').fadeOut();
+            }else{
+                $('#edit_country_delete_btn').fadeIn();
+            }
+            break;
+        }
+    }
+}
+
 function submitSettingsAction(){
     var form_data = new FormData();
     form_data.append('payment_gateway_username',$('#payment_gateway_username').val());  
@@ -224,10 +297,31 @@ function submitSettingsAction(){
     form_data.append('reset_password_email_template',escape(tinyMCE.get('reset_password_email_template').getContent()));  
     form_data.append('invoice_confirmation_email_template',escape(tinyMCE.get('invoice_confirmation_email_template').getContent()));  
     form_data.append('product_email_template',escape(tinyMCE.get('product_email_template').getContent()));  
-	form_data.append('csrf_token_allepg',$('#csrf_cookie_allepg').val());  
-    console.log(tinyMCE.Editor);
+	form_data.append('csrf_token_allepg',$('#csrf_cookie_allepg').val());
     $.ajax({
         url: 'config/setMetaOptions',
+        data: form_data,
+        cache: false,
+        contentType: false,
+        processData: false,
+        type: 'POST',
+        dataType: "json",
+        success: function (response) {
+			location.reload();
+        },
+        error: function (response) {
+            
+        }
+    });
+}
+function submitCountryAction(f){
+    var form_data = new FormData();
+    form_data.append('id',$('#edit_country_id').val());  
+    form_data.append('name',$('#edit_country_name').val()); 
+    form_data.append('action',f);
+	form_data.append('csrf_token_allepg',$('#csrf_cookie_allepg').val());
+    $.ajax({
+        url: 'config/setCountry',
         data: form_data,
         cache: false,
         contentType: false,
