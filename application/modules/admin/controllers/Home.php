@@ -10,7 +10,7 @@ class Home extends Admin_Controller {
 		$end_week = strtotime("next saturday",$start_week);
 		$start_week = date("Y-m-d",$start_week);
 		$end_week = date("Y-m-d",$end_week);
-		$rows=$this->users->execute_query("select sum(b.price) as price, count(*) as cnt,DATE(a.created_at) as time from epg_order a left join epg_product b ON a.product_id=b.id WHERE a.status=0 and a.created_at>='{$start_week}' and a.created_at<='{$end_week}' group by DATE(a.created_at) order by a.created_at");
+		$rows=$this->users->execute_query("select sum(b.price) as price, count(*) as cnt,DATE(a.created_at) as time from epg_order a left join epg_product b ON a.product_id=b.id WHERE a.status=0 and DATE(a.created_at)>='{$start_week}' and DATE(a.created_at)<='{$end_week}' group by a.created_at order by a.created_at");
 		$this->mViewData['sales_chart']='';
 		$this->mViewData['sales_chart_min']=0;
 		$this->mViewData['sales_chart_max']=0;
