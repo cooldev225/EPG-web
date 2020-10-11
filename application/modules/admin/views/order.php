@@ -301,7 +301,7 @@ function datatableInit(){
 			{
 				targets:5,
 				render: function(data,type,full,meta) {
-					return data;//Terms[data].title;
+					return Terms[data].title;
 				},
 			},{
 				targets:7,

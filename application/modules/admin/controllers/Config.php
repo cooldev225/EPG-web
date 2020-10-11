@@ -6,5 +6,6 @@ class Config extends Admin_Controller {
 	{
 		$this->mViewData['page_title']="Config";
 		$this->render('config','default_custom');
-	}
+    }
+    
 }

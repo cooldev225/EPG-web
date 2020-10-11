@@ -13,13 +13,13 @@
 
             <span class="text-muted font-weight-bold mr-4">Total Customers: <?php echo "{$customer_active_count}";?></span>
 
-            <div class="subheader-separator subheader-separator-ver mt-2 mb-2 mr-4 bg-gray-200"></div>
-            
-            <span class="text-muted font-weight-bold mr-4">Paid Customers: <?php echo "{$customer_count}";?></span>	
+            <span class="text-muted font-weight-bold mr-4">Paid Customers: <?php echo "{$customer_count}";?></span>
 
             <div class="subheader-separator subheader-separator-ver mt-2 mb-2 mr-4 bg-gray-200"></div>
-            
-            <span class="text-muted font-weight-bold mr-4">Subscriptions: <?php echo "{$customer_count}";?></span>		
+
+            <span class="text-muted font-weight-bold mr-4">Total Orders: <?php echo "{$customer_count}";?></span>
+
+            <span class="text-muted font-weight-bold mr-4">Paid Orders: <?php echo "{$customer_count}";?></span>
             <!--end::Actions-->
         </div>
         <!--end::Info-->
@@ -65,7 +65,7 @@
 					<div class="card-header flex-wrap border-0 pt-6 pb-0">
 						<div class="card-title">
 							<h3 class="card-label">
-								Subscriptions Table
+								Transaction histories
 								<span class="d-block text-muted pt-2 font-size-sm">view or edit and set fields</span>
 							</h3>
 						</div>
@@ -81,34 +81,60 @@
 									</svg></span>
 								Export
 							</button>
+							<div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
+								<ul class="navi flex-column navi-hover py-2">
+									<li class="navi-header font-weight-bolder text-uppercase font-size-xs text-primary pb-2">
+										Export Tools
+									</li>
+									<li class="navi-item">
+										<a href="javascript:;" class="navi-link" id="export_print">
+											<span class="navi-icon"><i class="la la-print"></i></span>
+											<span class="navi-text">Print</span>
+										</a>
+									</li>
+									<li class="navi-item">
+										<a href="javascript:;" class="navi-link" id="export_copy">
+											<span class="navi-icon"><i class="la la-copy"></i></span>
+											<span class="navi-text">Copy</span>
+										</a>
+									</li>
+									<li class="navi-item">
+										<a href="javascript:;" class="navi-link" id="export_excel">
+											<span class="navi-icon"><i class="la la-file-excel-o"></i></span>
+											<span class="navi-text">Excel</span>
+										</a>
+									</li>
+									<li class="navi-item">
+										<a href="javascript:;" class="navi-link" id="export_csv">
+											<span class="navi-icon"><i class="la la-file-text-o"></i></span>
+											<span class="navi-text">CSV</span>
+										</a>
+									</li>
+									<li class="navi-item">
+										<a href="javascript:;" class="navi-link" id="export_pdf">
+											<span class="navi-icon"><i class="la la-file-pdf-o"></i></span>
+											<span class="navi-text">PDF</span>
+										</a>
+									</li>
+								</ul>
+							</div>
 							<!--end::Button-->
 						</div>
 					</div>
 					<div class="card-body">
-						<!--begin: Search Form-->
-						<div class="mb-7">
-							<div class="row align-items-center">
-								<div class="col-lg-6 col-xl-6">
-									<div class="row align-items-center">
-										<div class="col-md-12 my-2 my-md-0">
-											<div class="input-icon">
-												<input type="text" class="form-control" placeholder="Search..." name="kt_datatable_search_query" id="kt_datatable_search_query" />
-												<span><i class="flaticon2-search-1 text-muted"></i></span>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="col-lg-6 col-xl-6 mt-5 mt-lg-0">
-									<a href="#" class="btn btn-light-primary px-6 font-weight-bold">
-										Search
-									</a>
-								</div>
-							</div>
-						</div>
-						<!--end: Search Form-->
-
 						<!--begin: Datatable-->
-						<div class="datatable datatable-bordered datatable-head-custom kt_datatable_class" name="kt_datatable" id="kt_datatable"></div>
+						<table class="table table-separate table-head-custom table-checkable" id="kt_datatable">
+                            <thead>
+                                <tr>
+                                    <th>Transaction ID</th>
+                                    <th>Code</th>
+									<th>Username</th>
+									<th>Product</th>
+                                    <th>Amount</th>
+                                    <th>Paid At</th>
+                                </tr>
+		                    </thead>
+		        		</table>
 						<!--end: Datatable-->
 					</div>
 				</div>
@@ -122,102 +148,95 @@
 </div>
 <!--end::Entry-->
 
-
 <input type="hidden" id="csrf_cookie_allepg" value="<?php echo $this->security->get_csrf_hash(); ?>" />
 <script>
 'use strict';
-var country_table=new Array(100);
-jQuery(document).ready(function() {
-	$('.kt_datatable_class').each(function(){
-		datatableInit();
-	});
-	
-	function datatableInit(){
-		country_table=$('#kt_datatable').KTDatatable({
-			// datasource definition
+var country_table;
+var productList=null;
+var Terms = {
+		0: {'title': '3 days', 'class': 'label-light-primary'},
+		1: {'title': 'monthly', 'class': ' label-light-info'},
+		2: {'title': '3 months', 'class': ' label-light-success'},
+		3: {'title': 'annual', 'class': ' label-light-danger'},
+	};
+jQuery(document).ready(function(){
+	datatableInit();
+});	
+function datatableInit(){
+	country_table=$('#kt_datatable').DataTable({
+		responsive: true,
+		buttons: [
+			'print',
+			'copyHtml5',
+			'excelHtml5',
+			'csvHtml5',
+			'pdfHtml5',
+		],
+		processing: true,
+		serverSide: true,
+		ajax: {
+			url: 'subscription/getTransactionListDatatable',			
 			data: {
-				type: 'remote',
-				source: {
-					read: {
-						url: '/api/epg/getCustomersDataTable',
-						params:{
-							csrf_token_allepg: $('#csrf_cookie_allepg').val(),
-						}
-					},
+				csrf_token_allepg: $('#csrf_cookie_allepg').val(),
+			},
+			type: 'POST',
+		},
+		columns: [
+			{data: 'transaction_id',sortable: false},
+			{data: 'code',sortable: true},
+			{data: 'username',sortable: true},
+			{data: 'name',sortable: true},
+			{data: 'amount',sortable: true},
+			{data: 'transaction_created_at',sortable: true},
+		],
+		columnDefs: 
+		[
+			{
+				targets:5,
+				render: function(data,type,full,meta) {
+					return changeDateFormat(data);
 				},
-				pageSize: 10, // display 20 records per page
-				serverPaging: true,
-				serverFiltering: false,
-				serverSorting: true
-			},
+			}
+		],
+	});
+	//country_table.ajax.reload();
+	$('#export_print').on('click', function(e) {
+		e.preventDefault();
+		country_table.button(0).trigger();
+	});
 
-			// layout definition
-			layout: {
-				scroll: false,
-				footer: false,
-			},
-			// column sorting
-			sortable: true,
-			pagination: true,
-			
-			search: {
-				input: $('#kt_datatable_search_query'),
-				key: 'generalSearch'
-			},
+	$('#export_copy').on('click', function(e) {
+		e.preventDefault();
+		country_table.button(1).trigger();
+	});
 
-			// columns definition
-			columns: 
-			[
-				{
-					field: 'id',
-					title: '',
-					sortable: false,
-					width: 30,
-					textAlign: 'center',
-				}, {
-					field: 'username',
-					title: 'User ID',
-					sortable: 'asc',
-				}, {
-					field: 'email',
-					title: 'Email',
-				}, {
-					field: 'first_name',
-					title: 'First Name',
-				}, {
-					field: 'last_name',
-					title: 'Last Name',
-				}, {
-					field: 'amount',
-					title: 'Amount',
-				}, {
-					field: 'paid_date',
-					title: 'Paid Date',
-				}, {
-					field: 'transaction_id',
-					title: 'Transaction ID',
-				}, {
-					field: 'invoice_id',
-					title: 'Invoice ID',
-				}, {
-					field: 'Actions',
-					title: 'Actions',
-					sortable: false,
-					overflow: 'visible',
-					autoHide: false,
-					template: function(row) {
-						return '\
-	                        <div class="dropdown dropdown-inline">\
-	                        <a href="javascript:removeChannels();" class="btn btn-sm btn-clean btn-icon mr-2" title="Edit details">\
-	                            <img style="opacity:0.66;" src="../assets/dist/metronic/media/svg/icons/Files/Deleted-file.svg"/>\
-	                        </a>\
-	                    ';
-					},
-				}
-			],
-		});
-	}
+	$('#export_excel').on('click', function(e) {
+		e.preventDefault();
+		country_table.button(2).trigger();
+	});
 
+	$('#export_csv').on('click', function(e) {
+		e.preventDefault();
+		country_table.button(3).trigger();
+	});
 
-});
+	$('#export_pdf').on('click', function(e) {
+		e.preventDefault();
+		country_table.button(4).trigger();
+	});
+}
+function changeDateFormat(d){
+	if(d==null)return '';
+	d=d.split(' ')[0];
+	var a=d.split('-');
+	if(a.length==3){
+		return a[1]+'/'+a[2]+'/'+a[0]; 
+	}else{
+		a=d.split('/');
+		if(a.length==3){
+			return a[2]+'-'+a[0]+'-'+a[1]; 
+		}
+	} 
+	return '';
+}
 </script>
