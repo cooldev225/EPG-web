@@ -262,9 +262,6 @@ function datatableInit(){
 		serverSide: true,
 		ajax: {
 			url: '/api/product/getProductsDataTable',
-			params:{
-				csrf_token_allepg: $('#csrf_cookie_allepg').val(),
-			},
 			type: 'POST',
 			data: {
 				csrf_token_allepg: $('#csrf_cookie_allepg').val(),
@@ -575,5 +572,8 @@ function KTDatatableInit(){
 			e.preventDefault();
 			country_table.button(4).trigger();
 		});
+}
+function submitForm(){
+	
 }
 </script>

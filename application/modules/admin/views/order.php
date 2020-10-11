@@ -81,34 +81,70 @@
 									</svg></span>
 								Export
 							</button>
+							<div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
+								<ul class="navi flex-column navi-hover py-2">
+									<li class="navi-header font-weight-bolder text-uppercase font-size-xs text-primary pb-2">
+										Export Tools
+									</li>
+									<li class="navi-item">
+										<a href="javascript:;" class="navi-link" id="export_print">
+											<span class="navi-icon"><i class="la la-print"></i></span>
+											<span class="navi-text">Print</span>
+										</a>
+									</li>
+									<li class="navi-item">
+										<a href="javascript:;" class="navi-link" id="export_copy">
+											<span class="navi-icon"><i class="la la-copy"></i></span>
+											<span class="navi-text">Copy</span>
+										</a>
+									</li>
+									<li class="navi-item">
+										<a href="javascript:;" class="navi-link" id="export_excel">
+											<span class="navi-icon"><i class="la la-file-excel-o"></i></span>
+											<span class="navi-text">Excel</span>
+										</a>
+									</li>
+									<li class="navi-item">
+										<a href="javascript:;" class="navi-link" id="export_csv">
+											<span class="navi-icon"><i class="la la-file-text-o"></i></span>
+											<span class="navi-text">CSV</span>
+										</a>
+									</li>
+									<li class="navi-item">
+										<a href="javascript:;" class="navi-link" id="export_pdf">
+											<span class="navi-icon"><i class="la la-file-pdf-o"></i></span>
+											<span class="navi-text">PDF</span>
+										</a>
+									</li>
+								</ul>
+							</div>
+							<button type="button" onclick="modelAddClick();" class="btn btn-light-primary font-weight-bolder" style="margin-right:10px;" data-toggle="modal" data-target="#exampleModalSizeLg">
+								<i class="la la-plus"></i>
+								Add
+							</button>
 							<!--end::Button-->
 						</div>
 					</div>
 					<div class="card-body">
-						<!--begin: Search Form-->
-						<div class="mb-7">
-							<div class="row align-items-center">
-								<div class="col-lg-6 col-xl-6">
-									<div class="row align-items-center">
-										<div class="col-md-12 my-2 my-md-0">
-											<div class="input-icon">
-												<input type="text" class="form-control" placeholder="Search..." name="kt_datatable_search_query" id="kt_datatable_search_query" />
-												<span><i class="flaticon2-search-1 text-muted"></i></span>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="col-lg-6 col-xl-6 mt-5 mt-lg-0">
-									<a href="#" class="btn btn-light-primary px-6 font-weight-bold">
-										Search
-									</a>
-								</div>
-							</div>
-						</div>
-						<!--end: Search Form-->
-
 						<!--begin: Datatable-->
-						<div class="datatable datatable-bordered datatable-head-custom kt_datatable_class" name="kt_datatable" id="kt_datatable"></div>
+						<table class="table table-separate table-head-custom table-checkable" id="kt_datatable">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Code</th>
+									<th>Username</th>
+									<th>Product</th>
+                                    <th>Countries</th>
+                                    <th>Term</th>
+                                    <th>Price</th>
+                                    <th>Created At</th>
+									<th>Start</th>
+									<th>End</th>
+									<th>Action</th>
+									<th>product_id</th>
+                                </tr>
+		                    </thead>
+		        		</table>
 						<!--end: Datatable-->
 					</div>
 				</div>
@@ -121,89 +157,286 @@
     <!--end::Container-->
 </div>
 <!--end::Entry-->
-
-
+<div class="modal fade" id="exampleModalSizeLg" tabindex="-1" role="dialog" aria-labelledby="exampleModalSizeLg" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Order dialog</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+            	<input class="form-control" type="hidden" placeholder="id" value="0" id="edit_id">
+				<div class="form-group row">
+					<label for="example-search-input" class="col-3 col-form-label">Code<span class="text-danger">*</span></label>
+					<div class="col-9">
+						<input class="form-control" type="text" value="" id='edit_code'/>
+					</div>
+				</div>
+                <div class="form-group row">
+					<label for="example-search-input" class="col-3 col-form-label">Username<span class="text-danger">*</span></label>
+					<div class="col-9">
+						<select class="form-control" style="width:100%;" id="edit_user_id" class="form-control select2">
+						<?php
+						foreach($userList as $user){
+							echo "<option value='{$user['id']}'>{$user['username']}</option>";
+						}
+						?>
+                        </select>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="example-search-input" class="col-3 col-form-label">Product<span class="text-danger">*</span></label>
+					<div class="col-9">
+						<select class="form-control" style="width:100%;" id="edit_product" class="form-control select2">
+						<?php
+						foreach($productList as $product){
+							echo "<option value='{$product['id']}'>{$product['name']}</option>";
+						}
+						?>
+                        </select>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="example-search-input" class="col-3 col-form-label">Term</label>
+					<div class="col-9">
+						<input class="form-control" type="text" disabled value="" id='edit_term'>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="example-search-input" class="col-3 col-form-label">Price</label>
+					<div class="col-9">
+						<input class="form-control" type="text" disabled value="" id="edit_price">
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="example-search-input" class="col-3 col-form-label">Created at<span class="text-danger">*</span></label>
+					<div class="col-9">
+						<input class="form-control" type="text" placeholder="Created at" value="<?php echo date('m/d/Y');?>" id="edit_created_at" style="max-width:120px;" autocomplete="off"/>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="example-search-input" class="col-3 col-form-label">Paid at</label>
+					<div class="col-9">
+						<input class="form-control" type="text" placeholder="Paid at" value="" id="edit_paid_at" style="max-width:120px;" autocomplete="off"/>
+					</div>
+				</div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal" id="model_close_btn">Close</button>
+                <button type="button" onclick="submitForm();" class="btn btn-primary font-weight-bold">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+<input type='hidden' value='<?php echo json_encode($productList);?>' id='productList'/>
 <input type="hidden" id="csrf_cookie_allepg" value="<?php echo $this->security->get_csrf_hash(); ?>" />
 <script>
 'use strict';
-var country_table=new Array(100);
-jQuery(document).ready(function() {
-	$('.kt_datatable_class').each(function(){
-		datatableInit();
+var country_table;
+var productList=null;
+var Terms = {
+		0: {'title': '3 days', 'class': 'label-light-primary'},
+		1: {'title': 'monthly', 'class': ' label-light-info'},
+		2: {'title': '3 months', 'class': ' label-light-success'},
+		3: {'title': 'annual', 'class': ' label-light-danger'},
+	};
+function changeProduct(){
+	for(var i=0;i<productList.length;i++){
+		if(productList[i].id==$('#edit_product').val()){
+			$('#edit_term').val(Terms[productList[i].term].title);
+			$('#edit_price').val(productList[i].price);
+			return;
+		}
+	}	
+}
+jQuery(document).ready(function(){
+	$('#edit_user_id').select2();
+	$('#edit_created_at').datepicker();
+	$('#edit_paid_at').datepicker();
+	$('#edit_product').select2();
+	productList=$.parseJSON($('#productList').val());
+	$('#edit_product').on('change',function(){
+		changeProduct();
 	});
-	
-	function datatableInit(){
-		country_table=$('#kt_datatable').KTDatatable({
-			// datasource definition
+	changeProduct();
+	datatableInit();
+});	
+function datatableInit(){
+	country_table=$('#kt_datatable').DataTable({
+		responsive: true,
+		buttons: [
+			'print',
+			'copyHtml5',
+			'excelHtml5',
+			'csvHtml5',
+			'pdfHtml5',
+		],
+		processing: true,
+		serverSide: true,
+		ajax: {
+			url: 'order/getOrderListDatatable',			
 			data: {
-				type: 'remote',
-				source: {
-					read: {
-						url: '/api/epg/getCustomersDataTable',
-						params:{
-							csrf_token_allepg: $('#csrf_cookie_allepg').val(),
-						}
-					},
+				csrf_token_allepg: $('#csrf_cookie_allepg').val(),
+			},
+			type: 'POST',
+		},
+		columns: [
+			{data: 'num',sortable: false},
+			{data: 'code',sortable: true},
+			{data: 'username',sortable: true},
+			{data: 'name',sortable: true},
+			{data: 'countries',sortable: true},
+			{data: 'term',sortable: true},
+			{data: 'price',sortable: true},
+			{data: 'created_at',sortable: true},
+			{data: 'start',sortable: true},
+			{data: 'end',sortable: true},
+			{data: 'id',sortable: false,width:80},
+			{data: 'product_id',visible:false},
+		],
+		columnDefs: 
+		[
+			{
+				targets:5,
+				render: function(data,type,full,meta) {
+					return Terms[data].title;
 				},
-				pageSize: 10, // display 20 records per page
-				serverPaging: true,
-				serverFiltering: false,
-				serverSorting: true
-			},
+			},{
+				targets:7,
+				render: function(data,type,full,meta) {
+					return changeDateFormat(data);
+				},
+			},{
+				targets:8,
+				render: function(data,type,full,meta) {
+					return changeDateFormat(data);
+				},
+			},{
+				targets:9,
+				render: function(data,type,full,meta) {
+					return changeDateFormat(data);
+				},
+			},{
+				targets:10,
+				render: function(data,type,row,meta) {
+					return '\
+					<div class="dropdown dropdown-inline">\
+						<a data-toggle="modal" data-target="#exampleModalSizeLg" href="javascript:;" onclick="\
+						$(\'#edit_id\').val('+row.id+');\
+						$(\'#edit_code\').val(\''+row.code+'\');\
+						$(\'#edit_product\').val(\''+row.product_id+'\').trigger(\'change\');\
+						$(\'#edit_created_at\').val(\''+changeDateFormat(row.created_at)+'\');\
+						$(\'#edit_paid_at\').val(\''+changeDateFormat(row.paid_at)+'\');\
+						" class="btn btn-sm btn-clean btn-icon mr-2" title="Reset password">\
+							<img style="opacity:0.66;" src="../assets/dist/metronic/media/svg/icons/Design/Edit.svg"/>\
+						</a>'+
+						'<a href="javascript:deleteOrder('+row.id+');" class="btn btn-sm btn-clean btn-icon mr-2" title="Reset password">\
+							<img style="opacity:0.66;" src="../assets/dist/metronic/media/svg/icons/Files/Deleted-file.svg"/>\
+						</a>\
+						</div>\
+					';
+				},
+			}
+		],
+	});
+	//country_table.ajax.reload();
+	$('#export_print').on('click', function(e) {
+		e.preventDefault();
+		country_table.button(0).trigger();
+	});
 
-			// layout definition
-			layout: {
-				scroll: false,
-				footer: false,
-			},
-			// column sorting
-			sortable: true,
-			pagination: true,
-			
-			search: {
-				input: $('#kt_datatable_search_query'),
-				key: 'generalSearch'
-			},
+	$('#export_copy').on('click', function(e) {
+		e.preventDefault();
+		country_table.button(1).trigger();
+	});
 
-			// columns definition
-			columns: 
-			[
-				{
-					field: 'id',
-					title: '',
-					sortable: false,
-					width: 30,
-					textAlign: 'center',
-				}, {
-					field: 'username',
-					title: 'User ID',
-					sortable: 'asc',
-				}, {
-					field: 'first_name',
-					title: 'First Name',
-				}, {
-					field: 'last_name',
-					title: 'Last Name',
-				}, {
-					field: 'products',
-					title: 'Products',
-				}, {
-					field: 'Price',
-					title: 'price',
-				}, {
-					field: 'paid',
-					title: 'Paid Status',
-				}, {
-					field: 'start',
-					title: 'Start Date',
-				}, {
-					field: 'expired',
-					title: 'Expired Date',
-				}, 
-			],
-		});
+	$('#export_excel').on('click', function(e) {
+		e.preventDefault();
+		country_table.button(2).trigger();
+	});
+
+	$('#export_csv').on('click', function(e) {
+		e.preventDefault();
+		country_table.button(3).trigger();
+	});
+
+	$('#export_pdf').on('click', function(e) {
+		e.preventDefault();
+		country_table.button(4).trigger();
+	});
+}
+function submitForm(){
+	if($('#edit_code').val()==''){
+		$('#edit_code').focus();
+		return;
 	}
-
-
-});
+	if($('#edit_created_at').val()==''){
+		$('#edit_created_at').focus();
+		return;
+	}
+	var form_data = new FormData();
+	form_data.append('id', $('#edit_id').val());
+	form_data.append('code', $('#edit_code').val());
+	form_data.append('user_id', $('#edit_user_id').val());
+	form_data.append('code', $('#edit_code').val());
+	form_data.append('product_id', $('#edit_product').val());
+	form_data.append('created_at', changeDateFormat($('#edit_created_at').val()));
+	form_data.append('paid_at', changeDateFormat($('#edit_paid_at').val()));
+	form_data.append('csrf_token_allepg', $('#csrf_cookie_allepg').val());
+	$.ajax({
+        url: 'order/saveOrder',
+        data: form_data,
+        cache: false,
+        contentType: false,
+        processData: false,
+        type: 'POST',
+        dataType: "json",
+        success: function (response) {
+          country_table.ajax.reload();
+		  $('#model_close_btn').trigger('click');
+        },
+        error: function (response) {
+        }
+    });
+}
+function deleteOrder(id){
+	var form_data = new FormData();
+	form_data.append('id', id);
+	form_data.append('csrf_token_allepg', $('#csrf_cookie_allepg').val());
+	$.ajax({
+        url: 'order/deleteOrder',
+        data: form_data,
+        cache: false,
+        contentType: false,
+        processData: false,
+        type: 'POST',
+        dataType: "json",
+        success: function (response) {
+          country_table.ajax.reload();
+        },
+        error: function (response) {
+        }
+    });
+}
+function modelAddClick(){
+	$('#edit_id').val(0);
+	$('#edit_code').val('');
+	$('#edit_paid_at').val('');
+}
+function changeDateFormat(d){
+	if(d==null)return '';
+	d=d.split(' ')[0];
+	var a=d.split('-');
+	if(a.length==3){
+		return a[1]+'/'+a[2]+'/'+a[0]; 
+	}else{
+		a=d.split('/');
+		if(a.length==3){
+			return a[2]+'-'+a[0]+'-'+a[1]; 
+		}
+	} 
+	return '';
+}
 </script>

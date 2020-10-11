@@ -37,7 +37,7 @@ class Product extends MY_Controller {
     public function getProductsDataTable(){
 
         header('Content-Type: application/json');	
-        $sql="SELECT * FROM epg_product a ";
+        $sql="SELECT * FROM epg_product a WHERE id>0 ";
         if(isset($_POST['search']['value'])&&$_POST['search']['value']!=''){
 			$sch=$_POST['search']['value'];
 			$sql.=" and (name like '%{$sch}%' or price like '%{$sch}%')";

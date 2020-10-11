@@ -6,12 +6,11 @@ class Home extends Admin_Controller {
 	public function index()
 	{
 		$this->load->model('users_model', 'users');
-		
-		$start_week = '2020-08-31';//strtotime("last sunday");
-		$end_week = '2020-09-05';//strtotime("next saturday",$start_week);
-		//$start_week = date("Y-m-d",$start_week);
-		//$end_week = date("Y-m-d",$end_week);
-		$rows=$this->users->execute_query("select sum(price) as price, count(*) as cnt,time from epg_order where status>0 and time>='{$start_week}' and time<='{$end_week}' group by time order by time");
+		$start_week = strtotime("last sunday");
+		$end_week = strtotime("next saturday",$start_week);
+		$start_week = date("Y-m-d",$start_week);
+		$end_week = date("Y-m-d",$end_week);
+		$rows=$this->users->execute_query("select sum(b.price) as price, count(*) as cnt,DATE(a.created_at) as time from epg_order a left join epg_product b ON a.product_id=b.id WHERE a.status=0 and a.created_at>='{$start_week}' and a.created_at<='{$end_week}' group by DATE(a.created_at) order by a.created_at");
 		$this->mViewData['sales_chart']='';
 		$this->mViewData['sales_chart_min']=0;
 		$this->mViewData['sales_chart_max']=0;
