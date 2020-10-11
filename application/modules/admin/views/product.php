@@ -573,7 +573,4 @@ function KTDatatableInit(){
 			country_table.button(4).trigger();
 		});
 }
-function submitForm(){
-	
-}
 </script>
