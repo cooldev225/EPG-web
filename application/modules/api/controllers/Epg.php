@@ -166,11 +166,11 @@ class Epg extends MY_Controller {
 	public function importChannelsFromXml(){
 		header('Content-Type: application/json');
 		//Make sure that this is a POST request.
-		if(strcasecmp($_SERVER['REQUEST_METHOD'], 'POST') != 0){
+		//if(strcasecmp($_SERVER['REQUEST_METHOD'], 'POST') != 0){
 		    //If it isn't, send back a 405 Method Not Allowed header.
-		    header($_SERVER["SERVER_PROTOCOL"]." 405 Method Not Allowed", true, 405);
-		    exit;
-		}
+		//    header($_SERVER["SERVER_PROTOCOL"]." 405 Method Not Allowed", true, 405);
+		//    exit;
+//}
 		$xmldata=file_get_contents($_FILES['file']['tmp_name']);
 		/*$xmldata=json_encode($xmldata);
 		$xml = simplexml_load_file($_FILES['file']['tmp_name']) or die('Failed to create an object');
@@ -185,7 +185,7 @@ class Epg extends MY_Controller {
 		*/
 		$xmldata=substr($xmldata,strpos($xmldata,'update="i" site="')+17);
 		$site=substr($xmldata,0,strpos($xmldata,'"'));
-
+exit($xmldata);
 		$rows=$this->users->execute_query("select * from epg_site where name='{$site}'");
 		$sid=0;
 		if(count($rows)){
